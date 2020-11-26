@@ -1,0 +1,157 @@
+html *
+{
+  font-family: Arial !important;
+}
+
+body{
+  background-color: GhostWhite;
+}
+
+/******************************** Login & Home Page ******************************/
+
+.university-logo-div{
+  width: 100%;
+  margin-bottom:.6em;
+  border-bottom: 1px solid #eee;
+  background-color: #fff;
+}
+
+.bits-line-div{
+  position:Absolute;
+  right: 9.6em; 
+  top:6.7em;
+}
+
+#imgline{
+  width: 150%;
+  height: .2em;
+}
+
+.login-box{
+  position: absolute;
+  top:  50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 500px;
+  height: 200px;
+  background-color: LightSkyBlue/*#fff*/;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 9px 10px 0px rgba(0,0,0,0.33);
+  -moz-box-shadow: 0px 9px 10px 0px rgba(0,0,0,0.33);
+  box-shadow: 0px 9px 10px 0px rgba(0,0,0,0.33);
+}
+
+.login-expired,.login-alert{
+  position: absolute;
+  top:  50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-color:white;
+  border-radius: 5px;
+  border: 1px solid rgba(0,0,0,0.33);
+}
+
+.login-expired{
+  width: 500px;
+  height: 200px;
+}
+
+.login-alert{
+  width: 550px;
+  height: 200px;
+}
+
+.email-login
+{
+  margin-top: 5.0em;
+  margin-left: 10.5em; 
+}
+
+.anchor-div{ 
+  border: 1px solid #c4c4c4; 
+  padding: 5px; 
+  width:60%;
+  background-color: aliceblue;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 9px 10px 0px rgba(0,0,0,0.33);
+  -moz-box-shadow: 0px 9px 10px 0px rgba(0,0,0,0.33);
+  box-shadow: 0px 9px 10px 0px rgba(0,0,0,0.33);
+}
+
+.anchor-div a img {
+  margin-left:3.5em;
+}
+
+.home-main-div{
+  border: 1px solid grey; 
+  width:30%;
+  height: 450px;
+  float:left; 
+  margin-right: 5px; 
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.home-page-div{
+  margin: auto; 
+  padding: 10px; 
+  width:60%;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.home-page-anchor{
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  text-align: center;
+  padding: 0 50px;
+  line-height: 30px;
+  display: inline-block;
+  position: relative;
+  border-radius: 20px;
+  background-image: linear-gradient(#335b71 45%, #03324c 55%);
+  box-shadow: 0 2px 2px #888888;
+  transition: color 0.3s, background-image 0.5s, ease-in-out;
+}
+
+.home-page-anchor:hover{
+  text-decoration:none; 
+  background-image: linear-gradient(#b1ccda 49%, #96b4c5 51%);
+  color: #03324c;
+}
+
+a, a:link, a:active, a:hover {
+  outline: none;
+}
+
+.main-anchor{
+  text-decoration: none;
+  text-transform:none; 
+  text-align: center;
+  color: black;
+  outline: 0;
+}
+
+.main-anchor:hover { 
+  text-decoration: none;
+  text-transform:none; 
+  color:navy;
+  outline: 0;
+}
+
+.main-anchor:not(:hover) { 
+  text-decoration: none;
+  text-transform:none;
+  color:black; 
+  outline: 0;
+}
+
+.home-div{
+  margin-left:-85px;
+}
+
+.main-cont{
+  display: flex;
+}
+/**************************************************************************/

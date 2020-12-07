@@ -414,10 +414,26 @@ $(document).ready(function()
                 error:function(xhr, errorType, exception){
                         console.log(xhr.responseText)
                         console.log('errorType : ' + errorType + " exception : " + exception)
+                    if(xhr.status == 419)
+                    {
+                        $(".modal").css("display", "block");
+                    }
+                    else
+                    {
+                        alert(xhr.responseText);
+                    }
                 }
             });
         }
 
+    });
+
+    $('#spanclose').click(function() {
+        $(".modal").css("display", "none");
+    });
+
+    $(window).click(function(e) {
+        $(".modal").css("display", "none");
     });
 
     $('#updatedatefld').change(function() {

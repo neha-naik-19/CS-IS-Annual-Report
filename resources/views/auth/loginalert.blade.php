@@ -59,7 +59,7 @@
                             <label style="font-size: 15px;"><strong>Kidly Sign-In with Bits email ID.</strong></label>
                         </div><br>
                         <div>
-                            <a class="btn btn-danger" href="/CS-IS/login">Login</a>
+                            <a class="btn btn-danger" href="/login">Login</a>
                         </div>
                     </form>
                 </div>

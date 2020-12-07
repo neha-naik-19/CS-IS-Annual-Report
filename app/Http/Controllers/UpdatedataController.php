@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Exceptions;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use DB;
 
@@ -17,6 +18,7 @@ use App\Models\pubhdr;
 use App\Models\pubdtl;
 use App\Models\articletypes;
 use App\Models\pubuserdetails;
+use App\Models\User;
 
 class UpdatedataController extends Controller
 {
@@ -106,6 +108,8 @@ class UpdatedataController extends Controller
                 
                 $data = pubhdr::whereId($request->hdnheaderid)->first();
 
+                $userid = User::where('email',Auth::user()->email)->first()->id;
+
                 DB::beginTransaction();
 
                 //Ranking
@@ -179,13 +183,13 @@ class UpdatedataController extends Controller
                     'issue'          => ($request->updateissue != null) ? $request->updateissue : null,
                     'pp'             => ($request->updatepp != null) ? $request->updatepp : null,
                     'digitallibrary' => ($request->updatedigitallibrary != null) ? $request->updatedigitallibrary : null,
-                    'userid'         => 11,
+                    'userid'         => $userid,
                     'updated_at'     => Carbon::now()
                 ]);
 
                 $pubuserdetails = new pubuserdetails(); 
                 $pubuserdetails->pubid = $request->hdnheaderid;
-                $pubuserdetails->userid = 11;
+                $pubuserdetails->userid = $userid;
                 $pubuserdetails->type = 'update';
                 $pubuserdetails->updated_date = Carbon::now()->toDateString();
                 $pubuserdetails->updated_time = Carbon::now()->toTimeString();

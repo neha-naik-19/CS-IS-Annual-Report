@@ -1,15 +1,9 @@
 
-$(document).ready(function(){
-    $('.anchor-div a').bind('click',function(e) {
-        var url = $('#application_url_login').val();
+$(document).ready(function(e){
 
-        $.ajax({
-            url: url + "/bitsemailauthenticate",
-            dataType: "json",
-            success: function (data) {
-                alert(1);
-            }
-        });
-    })
+    // if (!window.location.href.indexOf("login") > -1) {
+    //     history.pushState('data', '', $('#application_url_login').val()+);
+    //     e.preventDefault();
+    // }
 
 });    

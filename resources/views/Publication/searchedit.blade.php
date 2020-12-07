@@ -126,14 +126,22 @@
 </div>  <!--author-search -->
 
 <div style="height:3em; position: relative; left: 0;padding-left: 1px; height: 4.5em; padding-top: .5em;">
-    <div id="divprint" class="col-md-5" style="margin-left:1em;">
+    <div id="divsearch" class="col-md-5" style="margin-left:1em;">
         <!-- <button id="btnsearchedit" class="btn btn-danger" tabindex="">Search</button> -->
-        <button type="submit" id="btnsearchedit" class="btn btn-danger" tabindex="12" >
+        <button type="submit" id="btnsearchedit" class="btn btn-danger" tabindex="12" style="outline: none;" >
         <span class="glyphicon glyphicon-search"></span> Search</button>
         
         <!-- <button id="btnprintrefresh" class="btn btn-danger" tabindex="">Refresh</button> -->
-        <button type="submit" id="btnsearchrefresh" class="btn btn-danger" tabindex="13" >
+        <button type="submit" id="btnsearchrefresh" class="btn btn-danger" tabindex="13" style="outline: none;" >
         <span class="glyphicon glyphicon-refresh"></span> Refresh</button>
     </div>    
 </div>
 
+<div id="myModal1" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span id="spanclose1" class="close">&times;</span>
+        <label style="font-size: 20px;"><strong>The page has been expired.</strong></label>
+        <label style="font-size: 15px; color : red;"><strong>Please Login again.</strong></label>
+    </div>
+</div>

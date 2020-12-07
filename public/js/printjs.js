@@ -97,6 +97,388 @@ $(document).ready(function()
 
   });
 
+  //post fromdate
+  $('#prntdatefldfrom').bind('change',function(e) {
+    var format_frmdate = '';
+    var frmdate = '';
+    $('#hidden_frmdt').val('');
+
+    if($('#prntdatefldfrom').val() != '')
+    {
+        var dt = new Date($('#prntdatefldfrom').val());
+        var day = dt.getDate();
+        var month = dt.getMonth() + 1;
+        var year = dt.getFullYear();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (month < 10) {
+            month = "0" + month;
+        }
+        frmdate = year + "-" + month + "-" + day; //2020-08-21
+        format_frmdate = day + "/" + month + "/" + year; //21-08-2020
+
+        $('#hidden_frmdt').val(frmdate);
+    }
+
+    var url = $('#application_url').val();
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        dataType: 'text',
+        url: url + '/printfromdate',
+        data: {'frmdate': frmdate,'format_frmdate':format_frmdate},
+        success:function()
+        {
+            // console.log('Successfully Posted print from-date data to print page!!!!');
+        }, 
+        error:function(xhr, errorType, exception){
+            console.log(xhr.responseText)
+            console.log('errorType : ' + errorType + " exception : " + exception)
+
+            if(xhr.status == 419)
+            {
+                $("#myModal2").css("display", "block");
+            }
+            else
+            {
+                alert(xhr.responseText);
+            }
+        }
+    });
+
+    $('#hidden_frmdt').val('');
+  });
+
+  //post to-date
+  $('#prntdatefldto').bind('change',function(e) {
+    var format_todate = '';
+    var todate = '';
+    $('#hidden_todt').val('');
+
+    if($('#prntdatefldto').val() != ''){
+        var dt = new Date($('#prntdatefldto').val());
+        var day = dt.getDate();
+        var month = dt.getMonth() + 1;
+        var year = dt.getFullYear();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (month < 10) {
+            month = "0" + month;
+        }
+        todate = year + "-" + month + "-" + day; //2020-08-21
+        format_todate = day + "/" + month + "/" + year; //21-08-2020
+
+        $('#hidden_todt').val(todate);
+    }
+
+    var url = $('#application_url').val();
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        dataType: 'text',
+        url: url + '/printtodate',
+        data: {'todate': todate,'format_todate':format_todate},
+        success:function()
+        {
+            // console.log('Successfully Posted print to-date data to print page!!!!');
+        }, 
+        error:function(xhr, errorType, exception){
+            console.log(xhr.responseText)
+            console.log('errorType : ' + errorType + " exception : " + exception)
+            
+            if(xhr.status == 419)
+            {
+                $("#myModal2").css("display", "block");
+            }
+            else
+            {
+                alert(xhr.responseText);
+            }
+        }
+    });
+
+    $('#hidden_todt').val('');
+  });
+
+  //post authortype
+  $('#authortypeprint').bind('change',function(e) {
+    var authortype = $("#authortypeprint").val();
+
+    var url = $('#application_url').val();
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        dataType: 'text',
+        url: url + '/printauthortype',
+        data: {'authortype':authortype},
+        success:function()
+        {
+            // console.log('Successfully Posted print to-date data to print page!!!!');
+        }, 
+        error:function(xhr, errorType, exception){
+            console.log(xhr.responseText)
+            console.log('errorType : ' + errorType + " exception : " + exception)
+            
+            if(xhr.status == 419)
+            {
+                $("#myModal2").css("display", "block");
+            }
+            else
+            {
+                alert(xhr.responseText);
+            }
+        }
+    });
+  });
+
+  //post category
+  $('#categoryprint').bind('change',function(e) {
+    var category = $("#categoryprint").val();
+
+    var url = $('#application_url').val();
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        dataType: 'text',
+        url: url + '/printcategory',
+        data: {'category': category},
+        success:function()
+        {
+            // console.log('Successfully Posted print to-date data to print page!!!!');
+        }, 
+        error:function(xhr, errorType, exception){
+            console.log(xhr.responseText)
+            console.log('errorType : ' + errorType + " exception : " + exception)
+            
+            if(xhr.status == 419)
+            {
+                $("#myModal2").css("display", "block");
+            }
+            else
+            {
+                alert(xhr.responseText);
+            }
+        }
+    });
+  });
+
+  //post nationality
+  $('#nationalityprint').bind('change',function(e) {
+    var nationality = $("#nationalityprint").val();
+
+    var url = $('#application_url').val();
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        dataType: 'text',
+        url: url + '/printnationality',
+        data: {'nationality' : nationality},
+        success:function()
+        {
+            // console.log('Successfully Posted print to-date data to print page!!!!');
+        }, 
+        error:function(xhr, errorType, exception){
+            console.log(xhr.responseText)
+            console.log('errorType : ' + errorType + " exception : " + exception)
+            
+            if(xhr.status == 419)
+            {
+                $("#myModal2").css("display", "block");
+            }
+            else
+            {
+                alert(xhr.responseText);
+            }
+        }
+    });
+  });
+
+  //post title
+  $('#titleprint').bind('keyup',function(e) {
+    var title = $("#titleprint").val();
+
+    var url = $('#application_url').val();
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        dataType: 'text',
+        url: url + '/printtitle',
+        data: {'title':title},
+        success:function()
+        {
+            // console.log('Successfully Posted print to-date data to print page!!!!');
+        }, 
+        error:function(xhr, errorType, exception){
+            console.log(xhr.responseText)
+            console.log('errorType : ' + errorType + " exception : " + exception)
+            
+            if(xhr.status == 419)
+            {
+                $("#myModal2").css("display", "block");
+            }
+            else
+            {
+                alert(xhr.responseText);
+            }
+        }
+    });
+  });
+
+  //post conference
+  $('#conferenceprint').bind('keyup',function(e) {
+    var conference = $("#conferenceprint").val();
+
+    var url = $('#application_url').val();
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        dataType: 'text',
+        url: url + '/printconference',
+        data: {'conference':conference},
+        success:function()
+        {
+            // console.log('Successfully Posted print to-date data to print page!!!!');
+        }, 
+        error:function(xhr, errorType, exception){
+            console.log(xhr.responseText)
+            console.log('errorType : ' + errorType + " exception : " + exception)
+            
+            if(xhr.status == 419)
+            {
+                $("#myModal2").css("display", "block");
+            }
+            else
+            {
+                alert(xhr.responseText);
+            }
+        }
+    });
+  });
+
+  //post author
+  $('#dynamic_content').click(function(e) {
+    var obj={};
+    var arr = [];
+
+    $("#auth-sel-data .chk").each(function() {
+      if ($(this).is(":checked")){
+
+        obj={
+          fname : $(this).closest("tr").find("td:eq(1)").html(),
+          mname : $(this).closest("tr").find("td:eq(2)").html(),
+          lname : $(this).closest("tr").find("td:eq(3)").html()
+        };
+
+        arr.push(obj);
+      }
+    });
+
+    var url = $('#application_url').val();
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        dataType: 'text',
+        url: url + '/printauthor',
+        data: {'author' : (arr.length > 0) ? arr : null},
+        success:function()
+        {
+            // console.log('Successfully Posted print to-date data to print page!!!!');
+        }, 
+        error:function(xhr, errorType, exception){
+            console.log(xhr.responseText)
+            console.log('errorType : ' + errorType + " exception : " + exception)
+            
+            if(xhr.status == 419)
+            {
+                $("#myModal2").css("display", "block");
+            }
+            else
+            {
+                alert(xhr.responseText);
+            }
+        }
+    });
+  });
+
+  //post ranking
+  $('.multicheckprint').bind('click',function(e) {
+        var chkobj = {};
+        var chkarr = [];
+
+        $(".multicheckprint .rankingprintchk").each(function() {
+        if ($(this).is(":checked")){
+            chkobj={
+                checked : $(this).val()
+            };
+
+            chkarr.push(chkobj);
+        }
+        }); 
+
+        var url = $('#application_url').val();
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',
+            dataType: 'text',
+            url: url + '/printranking',
+            data: {'ranking' : (chkarr.length > 0) ? chkarr : null},
+            success:function()
+            {
+                // console.log('Successfully Posted print to-date data to print page!!!!');
+            }, 
+            error:function(xhr, errorType, exception){
+                console.log(xhr.responseText)
+                console.log('errorType : ' + errorType + " exception : " + exception)
+                
+                if(xhr.status == 419)
+                {
+                    $("#myModal2").css("display", "block");
+                }
+                else
+                {
+                    alert(xhr.responseText);
+                }
+            }
+        });
+  });
+
+    $('#spanclose2').click(function() {
+        $(".modal").css("display", "none");
+    });
+
+    $(window).click(function(e) {
+        $(".modal").css("display", "none");
+    });
+
   $('#divprint a').bind('click',function(e) {
       var format_frmdate = '';
       var format_todate = '';
@@ -148,24 +530,6 @@ $(document).ready(function()
           $('#hidden_todt').val(todate);
       }
 
-      // category = '';
-      // if($('#hidden_category').val() != ''){
-      //     category = $("#hidden_category").val().toLowerCase();
-          
-      //     if(category == 'none'){
-      //       category = null;
-      //     }
-      // }
-
-      // nationality = '';
-      // if($('#hidden_nationality').val() != ''){
-      //     nationality = $("#hidden_nationality").val();
-
-      //     if(nationality == '0'){
-      //       nationality = null;
-      //     }
-      // }
-
       $("#auth-sel-data .chk").each(function() {
         if ($(this).is(":checked")){
 
@@ -190,30 +554,10 @@ $(document).ready(function()
     
                 chkarr.push(chkobj);
             }
-        });
+        });  
       
       if((frmdate != '' && todate != '') || authortype != '0' || category != '0' || nationality != '0' || title != '' || conference != '' || arr.length > 0 || chkarr.length > 0){
-        var url = $('#application_url').val();
-
-        $.ajax({
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              },
-              type: 'POST',
-              dataType: 'text',
-              url: url + '/printformdata',
-              // data: $('#print-form').serialize(),
-              data: {'frmdate': frmdate,'todate': todate,'format_frmdate':format_frmdate,'format_todate':format_todate,  'authortype':authortype, 'category': category, 'nationality' : nationality, 'title':title, 'conference':conference, 'author' : (arr.length > 0) ? arr : null, 'ranking':(chkarr.length > 0) ? chkarr : null},
-              success:function()
-              {
-                  console.log('Successfully Posted printing data to print page!!!!');
-              }, 
-              error:function(xhr, errorType, exception){
-                  console.log(xhr.responseText)
-                  console.log('errorType : ' + errorType + " exception : " + exception)
-                  alert(xhr.responseText);
-              }
-          });
+        // var url = $('#application_url').val();
       }
       else
       {
@@ -227,8 +571,37 @@ $(document).ready(function()
   });
 
   $('#btnprintrefresh').click(function(e) {
-    e.preventDefault();
-    refresh_print();
+        e.preventDefault();
+        refresh_print();
+
+        var url = $('#application_url').val();
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',
+            dataType: 'text',
+            url: url + '/printformdata',
+            data: {'nodata': 0},
+            success:function()
+            {
+                console.log('Cleared all the sessions on print page!!!!');
+            }, 
+            error:function(xhr, errorType, exception){
+                console.log(xhr.responseText)
+                console.log('errorType : ' + errorType + " exception : " + exception)
+                
+                if(xhr.status == 419)
+                {
+                    $("#myModal2").css("display", "block");
+                }
+                else
+                {
+                    alert(xhr.responseText);
+                }
+            }
+        });
   });
 
 });

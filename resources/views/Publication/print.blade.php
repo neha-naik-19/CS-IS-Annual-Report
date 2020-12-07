@@ -97,16 +97,25 @@
 
 <div style="height: 7.8em; margin-top: 3.5em; margin-left: -1em; padding-top:0.1em; position: relative;">
     <div id="divprint" class="col-md-5">
-        <a id="btnprint" href="{{url('dynamic_pdf/pdf')}}" class="btn btn-danger" tabindex="6" target="_blank"><span class="glyphicon glyphicon-print"></span> Convert to PDF</a>
+        <a id="btnprint" style="outline: none;" href="{{url('dynamic_pdf/pdf')}}" class="btn btn-danger" tabindex="6" target="_blank"><span class="glyphicon glyphicon-print"></span> Convert to PDF</a>
             
-        <a id="btnprint" href="{{url('dynamic_word/wordexport')}}" class="btn btn-danger" tabindex="7" target="_blank"><span class="glyphicon glyphicon-print"></span> Convert to DOC</a>
+        <a id="btnword" style="outline: none;" href="{{url('dynamic_word/wordexport')}}" class="btn btn-danger" tabindex="7" target="_blank"><span class="glyphicon glyphicon-print"></span> Convert to DOC</a>
 
         <button type="submit" id="btnprintrefresh" class="btn btn-danger" tabindex="8" >
         <span class="glyphicon glyphicon-refresh"></span> Refresh</button>
             
-            <input type="hidden" name='hidden_frmdt' id="hidden_frmdt">
-            <input type="hidden" name='hidden_todt' id="hidden_todt">
+        <input type="hidden" name='hidden_frmdt' id="hidden_frmdt">
+        <input type="hidden" name='hidden_todt' id="hidden_todt">
     </div>
     
+</div>
+
+<div id="myModal2" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span id="spanclose2" class="close">&times;</span>
+        <label style="font-size: 20px;"><strong>The page has been expired.</strong></label>
+        <label style="font-size: 15px; color : red;"><strong>Please Login again.</strong></label>
+    </div>
 </div>
 

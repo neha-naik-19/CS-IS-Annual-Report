@@ -53,10 +53,10 @@
                 <div class="card-body">
                     <form style="margin-top: 2.0em; margin-left: 2.0em;" method="POST" action="">
                         <div>
-                            <label style="font-size: 25px;"><strong>The page has been expired.</strong></label>
+                            <label style="font-size: 25px;"><strong>Oops! That page can’t be found.</strong></label>
                         </div>
                         <div>
-                            <label style="font-size: 20px;"><strong>Please Login again.</strong></label>
+                            <label style="font-size: 20px;"><strong>Please go back to previous page.</strong></label>
                         </div><br>
                         <div class="">
                             <a class="btn btn-danger" href="/login">Login</a>

@@ -86,12 +86,14 @@
             <div style="position: absolute; right: 2em; top: 7em;">
               <a style="border: 1px solid #CCCCCC; padding: 7px; text-decoration: none; 
                           border-radius: 14px; background: #4479BA; color: white; box-shadow: 0 1px 1px #888888;" 
-                    href="{{url('/CS-IS/home')}}"><span class="glyphicon glyphicon-home"></span> HOME
+                    href="{{url('/home')}}"><span class="glyphicon glyphicon-home"></span> HOME
               </a>
             </div>
             
-            <div style="position:Absolute; float: right; right: 1.1em; top:7.9em;">
-              <div id="tabheading">Publication</div>
+            <div style="position:Absolute; float: right; right: 35.6em; top:7.2em;">
+              <div class="tabheading">Publication > New</div>
+            </div>
+            <div style="position:Absolute; float: right; right: 1.0em; top:9.2em;">
               <img src="../image/bits-line.gif">
             </div>
           </div>

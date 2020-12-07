@@ -47,7 +47,7 @@ class LoginController extends Controller
 
      //https://laravel.com/docs/8.x/controllers#controller-middleware
     // Route::get('profile', [UserController::class, 'show'])->middleware('auth');
-     public function __construct()
+    public function __construct()
     {
         $this->middleware('guest')->except('logout');
     }
@@ -62,25 +62,22 @@ class LoginController extends Controller
     {
         // Fetch Campus
         $campus = campuses::orderby("campus","asc")
-        ->select('campus')
+        ->select('campus','defaultemail')
         ->get();
 
         $isbitsemail = 0;
 
         foreach($campus as  $row)
         {
-            if (strpos($useremail, strtolower($row->campus))){
-                $isbitsemail = 1;
-            }
-
-            if($isbitsemail == 1)
+            // if (strpos($useremail, strtolower($row->campus))){
+            if(explode('@',$useremail)[1] == $row->defaultemail)
             {
+                $isbitsemail = 1;
                 break;
             }
         }
 
         return $isbitsemail;
-
     }
 
     public function handleProviderCallback($website)
@@ -113,22 +110,22 @@ class LoginController extends Controller
                     Auth::login($newUser);
                 }
 
-                return redirect('/CS-IS/home');
+                return redirect('/home');
             }
             else
             {
-                return redirect('/CS-IS/login-alert');
+                return redirect('/login-alert');
             }
 
         }catch (Exception $e) {
 
-            return redirect('/CS-IS/login/{website}');
+            return redirect('/login/{website}');
         }
     }
 
     public function logout(Request $request)
     {
         $this->performLogout($request);
-        return redirect('/CS-IS/login');
+        return redirect('/login');
     }
 }

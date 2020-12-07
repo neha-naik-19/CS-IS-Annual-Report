@@ -230,7 +230,7 @@
                     <span id="update-error-author" class="text-danger"></span>
                 </div> <!-- details-->
                 <div id="update-button" class="submit-button">
-                    <button type="submit" id="btnupdate" class="btn btn-danger" tabindex="21" >
+                    <button type="submit" id="btnupdate" class="btn btn-danger" tabindex="21" style="outline: none;">
                     <span class="glyphicon glyphicon-edit"></span>
                     Update</button>   
                 </div>  
@@ -243,7 +243,19 @@
 
     </form>
 
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span id="spanclose" class="close">&times;</span>
+            <label style="font-size: 20px;"><strong>The page has been expired.</strong></label>
+            <label style="font-size: 15px; color : red;"><strong>Please Login again.</strong></label>
+        </div>
+    </div>
+
 @include('pubfooter')
 
 @endsection
+
+
 

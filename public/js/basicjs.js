@@ -415,25 +415,28 @@ $(document).ready(function()
     //     window.location.href = "home";
     // });    
 
-    $('#lipublication a').bind('click',function(e){
-        $(".tab").css("display", "inline");
+    // $('#lipublication a').bind('click',function(e){
+    //     $(".tab").css("display", "inline");
         // window.location.href = "publication";
         // $(".layoutmain").css("display", "flex");
-        $('#tabheading').text('Publication');
-        $("#defaultopen").trigger('click');
-        e.preventDefault();
-    });
+        // $('#tabheading').text('Publication');
+        // $("#defaultopen").trigger('click');
+        // e.preventDefault();
+    // });
 
     $('#defaultopen').bind('click',function(){
+        $('.tabheading').text('Publication > New');
         $(window).scrollTop(0);
     });
 
     $('#btnsearch').bind('click',function(){
+        $('.tabheading').text('Publication > Edit');
         $(window).scrollTop(0);
         $('.multicheck').scrollTop(0);
     });
 
     $('#btnprint').bind('click',function(){
+        $('.tabheading').text('Publication > Print');
         $(window).scrollTop(0);
         $('.multicheckprint').scrollTop(0);
     });
@@ -665,10 +668,25 @@ $(document).ready(function()
                         console.log(xhr.responseText)
                         console.log('errorType : ' + errorType + " exception : " + exception)
 
+                    if(xhr.status == 419)
+                    {
+                        $(".modal").css("display", "block");
+                    }
+                    else
+                    {
                         alert(xhr.responseText);
+                    }
                 }
             });
         }
+    });
+
+    $('#spanclose').click(function() {
+        $(".modal").css("display", "none");
+    });
+
+    $(window).click(function(e) {
+        $(".modal").css("display", "none");
     });
 
     $("#modalpopup").submit(function(event) {

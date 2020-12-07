@@ -193,17 +193,26 @@
                     </div>
                 </div> <!-- details-->
                 <div id="submit-button" class="submit-button">
-                    <button type="submit" id="btnsubmit" class="btn btn-danger" tabindex="22" >
+                    <button type="submit" id="btnsubmit" class="btn btn-danger" tabindex="22" style="outline: none;">
                     <span class="glyphicon glyphicon-save"></span>
                     Save</button>
 
-                    <button type="submit" id="pagereset" class="btn btn-danger" tabindex="23" >
+                    <button type="submit" id="pagereset" class="btn btn-danger" tabindex="23" style="outline: none;">
                     <span class="glyphicon glyphicon-refresh"></span>
                     Refresh</button>
                 </div>
             </div> <!-- container-2 --> 
         </div> <!-- main -->
     </form>
+
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span id="spanclose" class="close">&times;</span>
+            <label style="font-size: 20px;"><strong>The page has been expired.</strong></label>
+            <label style="font-size: 15px; color : red;"><strong>Please Login again.</strong></label>
+        </div>
+    </div>
 
 @include('pubfooter')
 

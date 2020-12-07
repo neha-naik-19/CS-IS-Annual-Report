@@ -51,7 +51,7 @@
                     </div>
                     
                     <div style="position:Absolute; float: right; right: 1.1em; top:7.1em;">
-                        <div style="font-size: 150%; color:#263075;"><b>Publication Update</b></div>
+                        <div class="tabheading">Publication Update</div>
                         <img src="../image/bits-line.gif">
                     </div>
                 </div>

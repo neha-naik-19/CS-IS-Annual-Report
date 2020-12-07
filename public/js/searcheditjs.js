@@ -136,10 +136,26 @@ $(document).ready(function(){
             error:function(xhr, errorType, exception){
                 console.log(xhr.responseText)
                 console.log('errorType : ' + errorType + " exception : " + exception)
-                alert(xhr.responseText);
+                
+                if(xhr.status == 419)
+                {
+                    $("#myModal1").css("display", "block");
+                }
+                else
+                {
+                    alert(xhr.responseText);
+                }
             }
         });
     };
+
+    $('#spanclose1').click(function() {
+        $("#myModal1").css("display", "none");
+    });
+
+    $(window).click(function(e) {
+        $("#myModal1").css("display", "none");
+    });
 
     function delete_data(headerid){
 

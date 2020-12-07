@@ -264,8 +264,20 @@ class SearcheditController extends Controller
             $query = $request->get('query');
             if($query != '')
             {
+                // $data = DB::table('pubdtls')
+                //     ->select('athrfirstname','athrmiddlename','athrlastname')
+                //     ->where('athrfirstname','like','%' .$query. '%')
+                //     ->orWhere('athrmiddlename','like','%' .$query. '%')
+                //     ->orWhere('athrlastname','like','%' .$query. '%')
+                //     ->distinct()
+                //     ->get();
+
                 $data = DB::table('pubdtls')
                     ->select('athrfirstname','athrmiddlename','athrlastname')
+                    ->join("pubhdrs",function($join){
+                        $join->on("pubhdrs.id","=","pubdtls.pubhdrid")
+                            ->where('pubhdrs.deleted','=','0');
+                    })
                     ->where('athrfirstname','like','%' .$query. '%')
                     ->orWhere('athrmiddlename','like','%' .$query. '%')
                     ->orWhere('athrlastname','like','%' .$query. '%')

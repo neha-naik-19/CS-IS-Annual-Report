@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Exceptions;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use DB;
 
@@ -15,6 +16,7 @@ use App\Models\broadareas;
 use App\Models\pubhdr;
 use App\Models\pubdtl;
 use App\Models\articletypes;
+use App\Models\User;
 
 class PublicationController extends Controller
 {
@@ -110,18 +112,15 @@ class PublicationController extends Controller
                 $broadarea->broadarea = $request->txtpopupvalue;
                 $broadarea->save();
             }
-            // else if($request->hdnfld == 'i') //Impact Factor
-            // {
-            //     $impactfactor = new impactfactors();
-    
-            //     $impactfactor->impactfactor = $request->txtpopupvalue;
-            //     $impactfactor->save();
-            // }
+
             else //main page saving
             {
                 if($request->ajax())
                 {
                     // json_decode($request);
+
+                    $userid = User::where('email',Auth::user()->email)
+                            ->first()->id;
     
                     $pubhdr = new pubhdr();
                     $pubhdr->authortypeid = $request->authortype;
@@ -193,7 +192,7 @@ class PublicationController extends Controller
                     $pubhdr->issue = ($request->issue != null) ? $request->issue : null;
                     $pubhdr->pp = ($request->pp != null) ? $request->pp : null;
                     $pubhdr->digitallibrary = ($request->digitallibrary != null) ? $request->digitallibrary : null;
-                    $pubhdr->userid = 11;
+                    $pubhdr->userid = $userid;
                     $pubhdr->deleted  = 0;
                     $pubhdr->created_at = Carbon::now();
                     

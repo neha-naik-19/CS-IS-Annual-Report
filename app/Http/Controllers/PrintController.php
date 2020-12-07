@@ -9,6 +9,7 @@ use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 use App\Models\categories;
+use Input;
 
 class PrintController extends Controller
 {
@@ -107,14 +108,25 @@ class PrintController extends Controller
             $query = $request->get('query');
             if($query != '')
             {
+                // $data = DB::table('pubdtls')
+                //     ->select('athrfirstname','athrmiddlename','athrlastname')
+                //     ->where('athrfirstname','like','%' .$query. '%')
+                //     ->orWhere('athrmiddlename','like','%' .$query. '%')
+                //     ->orWhere('athrlastname','like','%' .$query. '%')
+                //     ->distinct()
+                //     ->get();
+
                 $data = DB::table('pubdtls')
                     ->select('athrfirstname','athrmiddlename','athrlastname')
+                    ->join("pubhdrs",function($join){
+                        $join->on("pubhdrs.id","=","pubdtls.pubhdrid")
+                            ->where('pubhdrs.deleted','=','0');
+                    })
                     ->where('athrfirstname','like','%' .$query. '%')
                     ->orWhere('athrmiddlename','like','%' .$query. '%')
                     ->orWhere('athrlastname','like','%' .$query. '%')
                     ->distinct()
                     ->get();
-                    // ->paginate(3);   
             }
             else
             {
@@ -157,6 +169,8 @@ class PrintController extends Controller
 
     function get_print_data($categoryname)
     {
+        $data = request()->all();
+
         $fromdate = session()->get('fromdate');
         $todate = session()->get('todate');
         $authortype = session()->get('authortype');
@@ -364,6 +378,82 @@ class PrintController extends Controller
         return $pdf->stream('Publication.pdf',Array('Attachment'=>0));
     }
 
+    //fromdate ajax post
+    public function postfromdate(Request $request)
+    {
+        Session::forget('fromdate');
+        Session::forget('format_fromdate');
+
+        session()->put('fromdate', $request->frmdate);
+        session()->put('format_fromdate', $request->format_frmdate);
+    }
+
+    //todate ajax post
+    public function posttodate(Request $request)
+    {
+        Session::forget('todate');
+        Session::forget('format_todate');
+
+        session()->put('todate', $request->todate);
+        session()->put('format_todate', $request->format_todate);
+    }
+
+    //authortype ajax post
+    public function postauthortype(Request $request)
+    {
+        Session::forget('authortype');
+
+        session()->put('authortype', $request->authortype);
+    }
+
+    //category ajax post
+    public function postcategory(Request $request)
+    {
+        Session::forget('category');
+
+        session()->put('category', $request->category);
+    }
+
+    //nationality ajax post
+    public function postnationality(Request $request)
+    {
+        Session::forget('nationality');
+
+        session()->put('nationality', $request->nationality);
+    }
+
+    //title ajax post
+    public function posttitle(Request $request)
+    {
+        Session::forget('title');
+
+        session()->put('title', $request->title);
+    }
+
+    //conference ajax post
+    public function postconference(Request $request)
+    {
+        Session::forget('conference');
+
+        session()->put('conference', $request->conference);
+    }
+
+    //author ajax post
+    public function postauthor(Request $request)
+    {
+        Session::forget('author');
+
+        session()->put('author', $request->author);
+    }
+
+    //ranking ajax post
+    public function postranking(Request $request)
+    {
+        Session::forget('ranking');
+
+        session()->put('ranking', $request->ranking);
+    }
+
     public function postform(Request $request)
     {
         Session::forget('fromdate');
@@ -378,17 +468,17 @@ class PrintController extends Controller
         Session::forget('author');
         Session::forget('ranking');
 
-        session()->put('fromdate', $request->frmdate);
-        session()->put('todate', $request->todate);
-        session()->put('format_fromdate', $request->format_frmdate);
-        session()->put('format_todate', $request->format_todate);
-        session()->put('authortype', $request->authortype);
-        session()->put('category', $request->category);
-        session()->put('nationality', $request->nationality);
-        session()->put('title', $request->title);
-        session()->put('conference', $request->conference);
-        session()->put('author', $request->author);
-        session()->put('ranking', $request->ranking);
+        // session()->put('fromdate', $request->frmdate);
+        // session()->put('todate', $request->todate);
+        // session()->put('format_fromdate', $request->format_frmdate);
+        // session()->put('format_todate', $request->format_todate);
+        // session()->put('authortype', $request->authortype);
+        // session()->put('category', $request->category);
+        // session()->put('nationality', $request->nationality);
+        // session()->put('title', $request->title);
+        // session()->put('conference', $request->conference);
+        // session()->put('author', $request->author);
+        // session()->put('ranking', $request->ranking);
     }
 
     function convert_print_data_to_html()
@@ -397,7 +487,7 @@ class PrintController extends Controller
 
         $categorydata = categories::select('category')
                         ->where('id',$category)
-                        ->first();
+                        ->first();    
 
         if($category == "0"){$category = null;}
 
@@ -667,17 +757,17 @@ class PrintController extends Controller
 
         $output .= '</body>';
 
-        Session::forget('fromdate');
-        Session::forget('todate');
-        Session::forget('format_fromdate');
-        Session::forget('format_todate');
-        Session::forget('authortype');
-        Session::forget('category');
-        Session::forget('nationality');
-        Session::forget('title');
-        Session::forget('conference');
-        Session::forget('author');
-        Session::forget('ranking');
+        // Session::forget('fromdate');
+        // Session::forget('todate');
+        // Session::forget('format_fromdate');
+        // Session::forget('format_todate');
+        // Session::forget('authortype');
+        // Session::forget('category');
+        // Session::forget('nationality');
+        // Session::forget('title');
+        // Session::forget('conference');
+        // Session::forget('author');
+        // Session::forget('ranking');
 
         return $output;
     }

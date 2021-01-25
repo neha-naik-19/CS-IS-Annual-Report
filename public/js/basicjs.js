@@ -76,7 +76,56 @@ function refresh_page()
 
     document.getElementById("required-message").style.display = "none";
 
+    document.getElementById("divupdown").style.display = "none";
+
     document.getElementById("datefld").focus();   
+}
+
+function refresh_view(){
+    document.getElementById('view-form').reset();
+
+    var tableviewdetailed = document.getElementById("view_auth_details_display");
+    var rownumber = (tableviewdetailed.rows.length - 1);
+
+    document.getElementById("div_view_author_search").classList.add("hidetd");
+
+    for(var i = 2;i<tableviewdetailed.rows.length;){
+
+        tableviewdetailed.deleteRow(i);
+    }
+
+    if(rownumber > 0)
+    {
+        tableviewdetailed.rows[1].cells[4].style.textAlign = "center";
+
+        tableviewdetailed.rows[1].cells[0].innerHTML = "";
+        tableviewdetailed.rows[1].cells[1].innerHTML = "";
+        tableviewdetailed.rows[1].cells[2].innerHTML = "";
+        tableviewdetailed.rows[1].cells[3].innerHTML = "";
+        tableviewdetailed.rows[1].cells[4].innerHTML = "<img id='imgview' src='../image/eyeicon.png'/>";
+        tableviewdetailed.rows[1].cells[5].innerHTML = "";
+    }
+    else
+    {
+        var row = tableviewdetailed.insertRow(1);
+
+        var td0 = row.insertCell(0);
+        var td1 = row.insertCell(1);
+        var td2 = row.insertCell(2);
+        var td3 = row.insertCell(3);
+        var td4 = row.insertCell(4);
+        var td5 = row.insertCell(5);
+
+        td4.style.textAlign = "center";
+        td5.style.display = "none";
+
+        td0.innerHTML = "";
+        td1.innerHTML = "";
+        td2.innerHTML = "";
+        td3.innerHTML = "";
+        td4.innerHTML = "<img id='imgview' src='../image/eyeicon.png'/>";
+        td5.innerHTML = "";
+    }
 }
 
 function refresh_print(){
@@ -307,17 +356,66 @@ async function AddAuthor(e)
     document.getElementById("firstname").focus();
 
     //disable add button as per conditions
-    disableinputs();
+    disableinputs();    
+
+    if((table.rows.length - 1) > 1)
+    {
+        document.getElementById("divupdown").style.display = "block";
+    }
+    else
+    {
+        document.getElementById("divupdown").style.display = "none";
+    }
 
     document.getElementById("error-author").innerText = "";
 
     return false;
 }
 
+var updownindex;
+async function upNdown(direction)
+{
+    if(updownindex != undefined)
+    {
+        var rows = document.getElementById('author-data').rows,
+        parent = rows[updownindex].parentNode;
+    
+        if(direction === "up")
+        {
+            if(updownindex > 1)
+            {
+                parent.insertBefore(rows[updownindex],rows[updownindex - 1]);
+                //When the row go up the index will be equal to index - 1
+                updownindex--;
+            }
+        }
+    
+        if(direction === "down")
+        {
+            if(updownindex < rows.length - 1)
+            {
+                parent.insertBefore(rows[updownindex + 1],rows[updownindex]);
+                //When the row go down the index will be equal to index + 1
+                updownindex++;
+            }
+        }
+    
+        var table = document.getElementById("author-data");
+        for (var i = 1; i < table.rows.length; i++) {
+            var firstCol = table.rows[i].cells[0]; //first column
+            // firstCol.style.color = 'red'; // or anything you want to do with first col
+            firstCol.innerText = i + '.';  
+        }
+    }
+}
+
 /*************************/
 $(document).ready(function()
 {   
     // $(this).scrollTop(0);
+
+    var globalforsave = 0;
+    var usernameasauthor = 0;
 
     function alertbox_main(title, msg, $true) {
         var $content =  "<div class='dialog-ovelay'>" +
@@ -344,6 +442,41 @@ $(document).ready(function()
         });
     }
 
+    function confirm_author(title, msg, $true, $false) {
+        var $content =  "<div class='dialog-ovelay'>" +
+                        "<div class='dialog'><header>" +
+                        " <h3> " + title + " </h3> " +
+                        "<i class='fa fa-close'></i>" +
+                            "</header>" +
+                            "<div class='dialog-msg'>" +
+                                " <p> " + msg + " </p> " +
+                            "</div>" +
+                            "<footer>" +
+                                "<div class='controls'>" +
+                                    " <button class='button button-danger doAction'>" + $true + "</button> " +
+                                    " <button class='button button-default cancelAction'>" + $false + "</button> " +
+                                "</div>" +
+                            "</footer>" +
+                        "</div>" +
+                        "</div>";
+        $('body').prepend($content);
+
+        $('.doAction').click(function () {
+            $('#firstname').focus();
+            $(this).parents('.dialog-ovelay').fadeOut(500, function () {
+                $(this).remove();
+            });
+        });
+
+        $('.cancelAction, .fa-close').click(function () {
+            $(this).parents('.dialog-ovelay').fadeOut(500, function () {
+            $(this).remove();
+            });
+
+            savedata();
+        });
+    }
+
     $('#btnadd').click(function () {
         if($('#checkauthorentry').val() == 'showalert'){
             alertbox_main('Alert','First Name and Last name is mandatory.','OK');  
@@ -365,7 +498,8 @@ $(document).ready(function()
     var options = {
         'backdrop' : 'static',
         'show' : true,
-        'focus' : true
+        'focus' : true,
+        'keyboard': false
     }
 
     function refresh_field() {
@@ -427,18 +561,28 @@ $(document).ready(function()
     $('#defaultopen').bind('click',function(){
         $('.tabheading').text('Publication > New');
         $(window).scrollTop(0);
+        refresh_page();
     });
 
     $('#btnsearch').bind('click',function(){
         $('.tabheading').text('Publication > Edit');
         $(window).scrollTop(0);
         $('.multicheck').scrollTop(0);
+        refresh_search();
     });
 
     $('#btnprint').bind('click',function(){
         $('.tabheading').text('Publication > Print');
         $(window).scrollTop(0);
         $('.multicheckprint').scrollTop(0);
+        refresh_print();
+    });
+
+    $('#btnview').bind('click',function(){
+        $('.tabheading').text('Publication > View');
+        $(window).scrollTop(0);
+        $('.multicheckprint').scrollTop(0);
+        refresh_view();
     });
 
     $(".national").click(function(){
@@ -480,6 +624,13 @@ $(document).ready(function()
                 tableBody = $("table tbody"); 
                 tableBody.append(markup); 
             }
+
+            if(totalTDs > 1){
+                $('#divupdown').css('display','block');
+            }
+            else{
+                $('#divupdown').css('display','none');
+            }
         }
     })
 
@@ -506,32 +657,126 @@ $(document).ready(function()
 
         disableinputs();
 
+        $('#divupdown').css('display','none');
+
         //changed image icon on add button
         $('#btnadd').text("").append("<img src='../image/edit-icon.png' />");
         $('#btnadd').prop('tabIndex', 20);
     })
 
+    $(document).on("click","tr", function(e) {
+        updownindex = $(this).index();
+        $(this).addClass('highlight').siblings().removeClass('highlight');    
+        var value=$(this).find('td:first').html();
+    }); 
+
     //Modal Popup Ranking
-    $('#ranking').click(function(){
+    $('#ranking').click(function(e){
         // $('#modalranking').modal('show')
-        $('#hdnfld').val('r');
+        e.preventDefault();
+        $('#hdnfld').val('rn');
         $('#txtpopup').val('');
         $('#txtpopup').css('border-color','');
         $('#txtpopup').prop('placeholder','Ranking');
         $('#error-popup').text('');
         $('.modal-title').text('Ranking');
+        $('#selpopup').css('display','none');
+        $('#btnpopupedit').text('Edit');
         $('#modalpopup').modal(options);
     });
 
     //Modal Popup Broad Area
-    $('#broadarea').click(function(){
-        $('#hdnfld').val('b');
+    $('#broadarea').click(function(e){
+        e.preventDefault();
+        $('#hdnfld').val('bn');
         $('#txtpopup').val('');
         $('#txtpopup').css('border-color','');
         $('#txtpopup').prop('placeholder','Broad Area');
         $('#error-popup').text('');
         $('.modal-title').text('Broad Area');
+        $('#selpopup').css('display','none');
+        $('#btnpopupedit').text('Edit');
         $('#modalpopup').modal(options);
+    });
+
+    $('#btnpopupedit').click(function(e){
+        if($('#btnpopupedit').text() == "Edit")
+        {
+            $('#btnpopupedit').text('New');
+            $('#selpopup').css('display','block');
+
+            if($('#hdnfld').val() == 'bn')
+            {
+                $('#hdnfld').val('be');
+            }
+
+            if($('#hdnfld').val() == 'rn')
+            {
+                $('#hdnfld').val('re');
+            }
+        }
+        else if($('#btnpopupedit').text() == "New")
+        {
+            $('#btnpopupedit').text('Edit');
+            $('#selpopup').css('display','none');
+
+            if($('#hdnfld').val() == 'be')
+            {
+                $('#hdnfld').val('bn');
+            }
+
+            if($('#hdnfld').val() == 're')
+            {
+                $('#hdnfld').val('rn');
+            }
+        }
+
+        var url = $('#application_url').val();
+        
+        $('#selpopup').empty();
+        if($('#hdnfld').val() == 'be' || $('#hdnfld').val() == 'bn')
+        {
+            $.ajax({
+                url: url + "/showbroadarea",
+                dataType: "json",
+                success: function (data) {
+                    $('#selpopup').append('<option value="0" selected> --Select-- </option>');
+                    $.each(data, function (key, value) {
+                        $('#selpopup').append('<option value="'+ value.id + '">' + value.broadarea + '</option>');
+                    });
+                }
+            });
+        }
+
+        if($('#hdnfld').val() == 're' || $('#hdnfld').val() == 'rn')
+        {
+            $.ajax({
+                url: url + "/showranking",
+                dataType: "json",
+                success: function (data) {
+                    $('#selpopup').append('<option value="0" selected> --Select-- </option>');
+                    $.each(data, function (key, value) {
+                        $('#selpopup').append('<option value="'+ value.id + '">' + value.ranking + '</option>');
+                    });
+                }
+            });
+        }
+    });
+    
+    $('#selpopup').change(function() {
+        var selid = $(this).find(':selected')[0].value;
+        var seltext = $(this).find(':selected')[0].text;
+
+        if(selid != 0)
+        {
+            $('#txtselid').val(selid);
+            $('#txtpopup').val(seltext);
+        }
+        else
+        {
+            $('#txtselid').val('');
+            $('#txtpopup').val('');
+        }
     });
 
     //popup save button click
@@ -541,18 +786,18 @@ $(document).ready(function()
         {
             e.preventDefault();
 
-            if( $('#hdnfld').val() == 'r') //Ranking
+            if( $('#hdnfld').val() == 'rn' ||  $('#hdnfld').val() == 're') //Ranking
             {
                 $('#error-popup').text('Please enter Ranking.');
             }
-            else if($('#hdnfld').val() == 'b') //Broad Area
+            else if($('#hdnfld').val() == 'bn' || $('#hdnfld').val() == 'be') //Broad Area
             { 
                 $('#error-popup').text('Please enter Broad Area.');
             }
-            else if($('#hdnfld').val() == 'i') //Impact Factor
-            {
-                $('#error-popup').text('Please enter Impact Factor.');
-            }
+            // else if($('#hdnfld').val() == 'i') //Impact Factor
+            // {
+            //     $('#error-popup').text('Please enter Impact Factor.');
+            // }
             $('#txtpopup').css('border-color','#cc0000');
         }
     });
@@ -584,11 +829,11 @@ $(document).ready(function()
         }
         else{$('#dterror').text('');}
 
-        if($('#place').val() == ''){
-            $('#error-place').text('*');
-            errorplaceholder = 1;
-            validate = 1;
-        }
+        // if($('#place').val() == ''){
+        //     $('#error-place').text('*');
+        //     errorplaceholder = 1;
+        //     validate = 1;
+        // }
 
         if($('#authortype').val() == null){
             $('#error-authortype').text('*');
@@ -628,12 +873,12 @@ $(document).ready(function()
 
         if(validate == 1)
         {
-            $(".ul-required-message").append('<li style="color:Red;list-style:none;">  * Required Filelds.</li>');
+            $(".ul-required-message").append('<li style="color:Red;list-style:none;">  * Required Fields.</li>');
         }
 
         if(rowCount == 1 && firstcolvalue == '')
         {
-            alertbox_main('Alert','At least one Author is mandatry.','OK'); 
+            alertbox_main('Alert','At least one Author is mandatory.','OK'); 
             validate = 1;   
         }
 
@@ -645,48 +890,102 @@ $(document).ready(function()
 
         if(validate == 0)
         {
-            var url = $('#application_url').val();
+            var tbl = $('#author-data tr:has(td)').map(function(i, v) {
+                var $td =  $('td', this);
+                    return {
+                             fname: $td.eq(4).find('input').val(),
+                             mname: $td.eq(5).find('input').val(),
+                             lname: $td.eq(6).find('input').val(),        
+                           }
+            }).get();
 
-            //ajax call for data save
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: 'POST',
-                dataType: 'text',
-                url: url + '/writetodb',
-                data: $('#main-form').serialize(),
-                success:function(data)
+            //Check user is in Author Entry
+            var loginuser = $('#hdn_login_user').val();
+
+            $.each(tbl, function (key, value) {
+                if(loginuser.includes(value.fname) && loginuser.includes(value.mname) && loginuser.includes(value.lname) && usernameasauthor == 0)
                 {
-                    console.log('SUCCESS: ', 'Saved Successfully!!!');
-
-                    refresh_page();
-                    refresh_field();
-                },
-
-                error:function(xhr, errorType, exception){
-                        console.log(xhr.responseText)
-                        console.log('errorType : ' + errorType + " exception : " + exception)
-
-                    if(xhr.status == 419)
+                    if(loginuser.includes(value.lname))
                     {
-                        $(".modal").css("display", "block");
+                        usernameasauthor = 1;
                     }
-                    else
+                }
+
+                if(value.mname != "")
+                {
+                    if(loginuser.includes(value.mname))
                     {
-                        alert(xhr.responseText);
+                        usernameasauthor = 1;
                     }
                 }
             });
+
+            if(usernameasauthor == 0)
+            {
+                confirm_author('Confirm', 'Login User is not included in Author list.<br />Do you want to add Login User as Author?', 'Yes', 'No');
+            }
+            else
+            {
+                savedata();
+            }
         }
     });
 
+    function savedata()
+    {
+        usernameasauthor = 0;
+
+        var url = $('#application_url').val();
+
+        //ajax call for data save
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',
+            dataType: 'text',
+            url: url + '/writetodb',
+            data: $('#main-form').serialize(),
+            success:function(data)
+            {
+                console.log('SUCCESS: ', 'Saved Successfully!!!');
+
+                $('.ul-required-message li').remove(); 
+                refresh_page();
+                refresh_field();
+
+                $('.required-message').css('display','block');
+                $(".ul-required-message").append('<li style="color:Green;list-style:none;"><strong>Request Saved Successfully.</strong></li>');
+            
+                setTimeout(function(){ 
+                    $('.required-message').hide('slow'); 
+                }, 3000 );
+            
+                $('#datefld').focus();
+            },
+
+            error:function(xhr, errorType, exception){
+                    console.log(xhr.responseText)
+                    console.log('errorType : ' + errorType + " exception : " + exception)
+
+                if(xhr.status == 419)
+                {
+                    $("#myModal").css("display", "block");
+                }
+                else
+                {
+                    alert(xhr.responseText);
+                }
+            }
+        });
+    }
+
     $('#spanclose').click(function() {
-        $(".modal").css("display", "none");
+        $("#myModal").css("display", "none");
     });
 
     $(window).click(function(e) {
-        $(".modal").css("display", "none");
+        $("#myModal").css("display", "none");
     });
 
     $("#modalpopup").submit(function(event) {
@@ -701,7 +1000,7 @@ $(document).ready(function()
             type: 'POST',
             dataType: 'text',
             url: url + '/writetodb',
-            data: {'txtpopupvalue': $('#txtpopup').val(),'hdnfld': $('#hdnfld').val()},
+            data: {'txtpopupeditid': $('#txtselid').val(), 'txtpopupvalue': $('#txtpopup').val(),'hdnfld': $('#hdnfld').val()},
             success:function(data)
             {
                 console.log('SUCCESS: ', 'Saved Popups Successfully!!!');
@@ -710,7 +1009,38 @@ $(document).ready(function()
                     $('#div_message').slideUp('slow'); 
                     $('#txtpopup').val('');
                     $('#txtpopup').focus();
-                }, 1000 );
+                }, 1500 );
+
+                var url = $('#application_url').val();
+        
+                $('#selpopup').empty();
+                if($('#hdnfld').val() == 'be' || $('#hdnfld').val() == 'bn')
+                {
+                    $.ajax({
+                        url: url + "/showbroadarea",
+                        dataType: "json",
+                        success: function (data) {
+                            $('#selpopup').append('<option value="0" selected> --Select-- </option>');
+                            $.each(data, function (key, value) {
+                                $('#selpopup').append('<option value="'+ value.id + '">' + value.broadarea + '</option>');
+                            });
+                        }
+                    });
+                }
+        
+                if($('#hdnfld').val() == 're' || $('#hdnfld').val() == 'rn')
+                {
+                    $.ajax({
+                        url: url + "/showranking",
+                        dataType: "json",
+                        success: function (data) {
+                            $('#selpopup').append('<option value="0" selected> --Select-- </option>');
+                            $.each(data, function (key, value) {
+                                $('#selpopup').append('<option value="'+ value.id + '">' + value.ranking + '</option>');
+                            });
+                        }
+                    });
+                }
             },
 
             error:function(xhr, errorType, exception){
@@ -749,12 +1079,12 @@ $(document).ready(function()
         }
     });
 
-    $('#place').keypress(function() {
-        if(errorplaceholder = 1 && $(this).val() != "" && $('#error-place').text() == '*'){
-            $('#error-place').text('');
-            errorplaceholder = 0;
-        }
-    });
+    // $('#place').keypress(function() {
+    //     if(errorplaceholder = 1 && $(this).val() != "" && $('#error-place').text() == '*'){
+    //         $('#error-place').text('');
+    //         errorplaceholder = 0;
+    //     }
+    // });
     
     $('#authortype').change(function() {
         if(errorplaceholder = 1 && $(this).val() != null) {
@@ -807,33 +1137,33 @@ $(document).ready(function()
         }
     });   
 
-    $('#defaultopen').click(function() {
-        refresh_page();
-    }); 
+    // $('#defaultopen').click(function() {
+    //     refresh_page();
+    // }); 
 
-    $('#btnprint').click(function() {
-        refresh_print();
-    });
+    // $('#btnprint').click(function() {
+    //     refresh_print();
+    // });
 
-    $('#btnsearch').click(function() {
-        refresh_search();
-    });
+    // $('#btnsearch').click(function() {
+    //     refresh_search();
+    // });
 
-    $('#btnadd').click(function() {
-        $('#firstname').css('border','1px solid #ccc');
-        $('#firstname').css('color','inherit');
-        $('#firstname').attr('placeholder',' First Name');
+    // $('#btnadd').click(function() {
+    //     $('#firstname').css('border','1px solid #ccc');
+    //     $('#firstname').css('color','inherit');
+    //     $('#firstname').attr('placeholder',' First Name');
 
-        $('#middlename').css('border','1px solid #ccc');
-        $('#middlename').css('color','inherit');
-        $('#middlename').attr('placeholder',' Middle Name');
+    //     $('#middlename').css('border','1px solid #ccc');
+    //     $('#middlename').css('color','inherit');
+    //     $('#middlename').attr('placeholder',' Middle Name');
 
-        $('#lastname').css('border','1px solid #ccc');
-        $('#lastname').css('color','inherit');
-        $('#lastname').attr('placeholder',' Middle Name');
+    //     $('#lastname').css('border','1px solid #ccc');
+    //     $('#lastname').css('color','inherit');
+    //     $('#lastname').attr('placeholder',' Last Name');
 
-        $('#error-author-name').text('');
-    });
+    //     $('#error-author-name').text('');
+    // });
 
     $('#btnrefresh').click(function() {
         $('#firstname').css('border','1px solid #ccc');

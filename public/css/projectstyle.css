@@ -17,6 +17,10 @@ body{
 
 @media(min-width:200px){
 
+	/* .modal.fade {
+		display: none;
+	} */
+
 	.main, .mainprnt, .mainprnt-1, .mainsearch-1, .divsearch-1, .goacampus{
 		display: flex;
 	}
@@ -56,7 +60,7 @@ body{
 		justify-content: space-between;
 	}
 
-	.printclass, .searcheditclass{
+	.viewclass, .printclass, .searcheditclass{
 		margin-top: 5px;
 		margin-left: 25px;
 	}
@@ -116,9 +120,14 @@ body{
 		outline: none;
 	}
 
-	.modal-dialog{
-		width: 360px;
+	.modal-dialog{	
+		width: 400px;
 	}
+
+	/* #modaldialog1{
+		width: 10000px;
+		height: 200px;
+	} */
 
 	.modal-header {
 		background-color: #337AB7;
@@ -293,16 +302,19 @@ body{
 		padding-left: 4px;
 	}
 
-	tr:nth-child(even) {
+	#search-tablebody tr:nth-child(even), #print-tablebody tr:nth-child(even) {
 		background-color: white;
-	} 
+	}
 
-	tr:nth-child(odd) {
+	#search-tablebody tr:nth-child(odd), #print-tablebody tr:nth-child(odd) {
 		background-color: #eee;
 	} 
 
-	tr:hover {
-		background-color: #d1d1e0;
+	#search-tablebody tr:hover, #print-tablebody tr:hover {
+		/* background-color: #d1d1e0; */
+		background-color: #B0C4DE;
+		color: #0000CD;
+		font-weight: bold;
 	}
 
 	.submit-button {
@@ -678,7 +690,7 @@ body{
 		height: 2em;
 	 }
 
-	 .inputsearch{
+	 .inputsearch, .inputview {
 		 width: 28em;
 		 height: 2em;
 	 }
@@ -886,7 +898,7 @@ body{
 		padding-left: 4px;
 	}
 
-	#auth_search_edit th{
+	#auth_search_edit th, #view_auth_details_display th{
 		background: #4169E1; 
     }
     
@@ -968,43 +980,143 @@ body{
 
 	  /**************** Model Pop-Up for 419 - Page Expired error ****************/
 	  /* The Modal (background) */
-	.modal {
-		display: none; /* Hidden by default */
-		position: fixed; /* Stay in place */
-		z-index: 1; /* Sit on top */
-		padding-top: 100px; /* Location of the box */
-		left: 0;
-		top: 0;
-		width: 100%; /* Full width */
-		height: 100%; /* Full height */
-		overflow: auto; /* Enable scroll if needed */
-		background-color: rgb(0,0,0); /* Fallback color */
-		background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-	}
+	 #myModal, #myModal2 {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 400px;
+		max-width: 100%;
+		height: 400px;
+  		max-height: 100%;
+	 } 
+
+	 #myModal1, #myModal3{
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 800px;
+		max-width: 100%;
+		height: 400px;
+  		max-height: 100%;
+	 }
 
 	/* Modal Content */
-	.modal-content {
+	/* #idmodalcontent {
 		background-color: #fefefe;
 		margin: auto;
 		padding: 20px;
 		border: 1px solid #888;
 		width: 50%;
-	}
+	} */
   
   	/* The Close Button */
-	.close {
+	.closeexpire {
 		position: absolute;
 		color: #aaaaaa;
-		right: 1em;
-		top: 0.2em;
+		right: 0.1em;
+		bottom: 1.6em;
 		font-size: 28px;
 		font-weight: bold;
 	}
+
+	#spanclose1,#spanclose3{
+		right: 0.1em;
+		bottom: 3em;
+	}
   
-	.close:hover,.close:focus {
+	.closeexpire:hover,.closeexpire:focus {
 		color: #000;
 		text-decoration: none;
 		cursor: pointer;
 	}
 	/*****************************************************************************/
+
+	.btnpopup {
+		background-color:#B0C4DE;
+		border: none;
+		color: black;
+		padding: 5px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-family: Arial !important;
+		font-size: 12px;
+		margin: 4px 2px;
+		cursor: pointer;
+		border-radius: 50%;
+		position: absolute;
+		outline: 0;
+		left: 1em;
+	  }
+	  
+	  .btnpopup:active, .btnpopup:focus, .btnpopup:hover{
+		background-color:#2e6da4;
+		outline: 0;
+	  }
+
+	  /*****************************************************************************/
+
+	  .up,.down{
+		  background-color: white;
+		  border-color: tomato;
+		  color: teal;
+		  outline: 0;
+	  }
+
+	  .up:focus, .up:hover, .down:focus, .down:hover{
+		background-color:wheat;
+		color: #000099;
+		outline: 0;
+	  }
+
+	  .highlight{
+		  background-color: #B0C4DE;
+		  color: #0000CD;
+		  /* font-weight: bold; */
+	  }	
+
+	  .hidetd{
+		display:none;
+	  }
+
+	  .showtd{
+		display:none;
+	  }
+
+	  /********************************************************************/
+	  /* Bootstrap Datepicker */
+	  .ui-datepicker-calendar {
+		display: none;
+		}
+
+	  /********************************************************************/
+	  /* Only Year dipslay */
+	  .date-own::-webkit-inner-spin-button {
+		display: none;
+	}
+
+	.date-own::-webkit-calendar-picker-indicator {
+		opacity: 0;
+	}
+
+	.date-own {
+		background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+		border: 1px solid #c4c4c4;
+		border-radius: 5px;
+		background-color: #fff;
+		padding: 3px 5px;
+		box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
+		width: 150px;
+	}
+
+	.date-own{
+		box-sizing: border-box;
+		border: 1px solid #ccc;
+		border-radius: 2px;
+		-webkit-transition: 0.5s;
+		transition: 0.5s;
+		outline: none;
+	}
 } 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 use App\Models\categories;
@@ -13,6 +14,7 @@ use App\Models\pubhdr;
 use App\Models\pubdtl;
 use App\Models\rankings;
 use App\Models\pubuserdetails;
+use App\Models\User;
 
 class SearcheditController extends Controller
 {
@@ -215,9 +217,10 @@ class SearcheditController extends Controller
                 <td style="vertical-align: text-top; width: 10em; font-size: .9em;">' . $row->issue .'</td>
                 <td style="vertical-align: text-top; width: 10em; font-size: .9em;">' . $row->pp .'</td>
                 <td style="vertical-align: text-top; width: 10em; font-size: .9em;">' . $row->doi .'</td>
-                <td style="vertical-align: text-top; width: 4em; font-size: .9em;"><a target="_blank" href='. url('publicationupdate/'.base64_encode($row->hdrid)) .'>
-                <img id="imgsearchedit" src="../image/edit-icon.png"></a></td><td style="vertical-align: text-top; width: 4em; font-size: .9em;"><img id="imgsearchdelete" src="../image/delete-icon.png"></td>
-                <td style="display:none; vertical-align: text-top;">' . $row->hdrid . '</td>
+                <td id="tdedit" style="vertical-align: text-top; width: 4em; font-size: .9em;"><a target="_blank" href='. url('publicationupdate/'.base64_encode($row->hdrid)) .'><img id="imgsearchedit" class="hidetd" src="../image/edit-icon.png"></a></td>
+                <td id="tddelete" style="vertical-align: text-top; width: 4em; font-size: .9em;"><img id="imgsearchdelete" class="hidetd" src="../image/delete-icon.png"></td>
+                <td style="display:none; vertical-align: text-top;" name="pubid">' . $row->hdrid . '</td>
+                <td style="display:none; vertical-align: text-top;" name="userid">' . $row->userid . '</td>
                 </tr>';
                 // base64_decode
             }
@@ -233,24 +236,25 @@ class SearcheditController extends Controller
     }
 
     public function showrankings()
-    {
-        // $data = rankings::orderby("ranking","asc")
-        //                 ->select('id','ranking')
-        //                 ->get();
-                        
-        // Fetch w/o Rankings -> Others
+    {                
+        // Fetch Core A*
+        $rankingsOnlyAstarData = rankings::select('id','ranking')
+        ->where('ranking','=','Core A*')
+        ->get();                        
+                    
+        // Fetch w/o Others, Core A*
         $rankingsNoOthersData = rankings::orderby("ranking","asc")
-        ->select('id','ranking')
-        ->where('ranking','<>','Others')
-        ->get();                         
+                            ->select('id','ranking')
+                            ->whereNotIn('ranking', ['Core A*','Others'])
+                            ->get();                         
 
-        // Fetch only Rankings -> Others
+        // Fetch only Others
         $rankingsOnlyOthersData = rankings::select('id','ranking')
-                ->where('ranking','=','Others')
-                ->get();
+        ->where('ranking','=','Others')
+        ->get();
 
-        //Fetch all rankings in                        
-        $data = $rankingsNoOthersData->merge($rankingsOnlyOthersData);                
+        //Fetch all rankings in
+        $data = $rankingsOnlyAstarData->merge($rankingsNoOthersData)->merge($rankingsOnlyOthersData);              
 
         return response()->json($data);                
     }
@@ -319,5 +323,14 @@ class SearcheditController extends Controller
 
             echo json_encode($data);
         }
+    }
+
+    public function loginuser()
+    {
+        //Logged in user
+        $userid = User::where('email',Auth::user()->email)
+                  ->first()->id;
+
+        return response()->json($userid);          
     }
 }

@@ -244,12 +244,12 @@
     </form>
 
     <!-- The Modal -->
-    <div id="myModal" class="modal">
+    <div id="myModal3" class="modal">
         <!-- Modal content -->
-        <div class="modal-content">
-            <span id="spanclose" class="close">&times;</span>
-            <label style="font-size: 20px;"><strong>The page has been expired.</strong></label>
-            <label style="font-size: 15px; color : red;"><strong>Please Login again.</strong></label>
+        <div id="idmodalcontent" class="modal-content">
+            <span id="spanclose3" class="closeexpire">&times;</span>
+            <label style="font-size: 20px; padding-left: 10px; padding-bottom: 10px; padding-top: 5px;"><strong>The page has been expired.</strong></label>
+            <label style="font-size: 15px; color : red; padding-left: 10px; padding-bottom: 10px;"><strong>Please Login again.</strong></label>
         </div>
     </div>
 

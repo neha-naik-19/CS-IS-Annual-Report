@@ -46,20 +46,25 @@ class PublicationController extends Controller
             $authortypeData['data'] = authortypes::orderby("authortype","asc")
                                     ->select('id','authortype')
                                     ->get();
+
+            // Fetch only Rankings -> Others
+            $rankingsOnlyAstarData = rankings::select('id','ranking')
+                                    ->where('ranking','=','Core A*')
+                                    ->get();                        
                                     
             // Fetch w/o Rankings -> Others
             $rankingsNoOthersData = rankings::orderby("ranking","asc")
                                     ->select('id','ranking')
-                                    ->where('ranking','<>','Others')
+                                    ->whereNotIn('ranking', ['Core A*','Others'])
                                     ->get();                         
 
             // Fetch only Rankings -> Others
             $rankingsOnlyOthersData = rankings::select('id','ranking')
                                     ->where('ranking','=','Others')
                                     ->get();
-            
-            //Fetch all rankings in                        
-            $rankingsData['data'] = $rankingsNoOthersData->merge($rankingsOnlyOthersData);
+
+            //Fetch all rankings in
+            $rankingsData['data'] = $rankingsOnlyAstarData->merge($rankingsNoOthersData)->merge($rankingsOnlyOthersData);
 
             //Fetch Broadareas
             $broadareasData['data'] = broadareas::orderby("broadarea","asc")
@@ -97,7 +102,7 @@ class PublicationController extends Controller
         DB::beginTransaction();
         try
         {
-            if($request->hdnfld == 'r')
+            if($request->hdnfld == 'rn')
             {
                 //$ranking = rankings::all();
                 $ranking = new rankings();
@@ -105,12 +110,30 @@ class PublicationController extends Controller
                 $ranking->ranking = $request->txtpopupvalue;
                 $ranking->save();
             }
-            else if($request->hdnfld == 'b') //Broad Area
+            elseif($request->hdnfld == 're')
+            {
+                $ranking = new rankings();
+                $data = rankings::whereId($request->txtpopupeditid)->first();
+
+                $data->update([ //updateing to Rankings table
+                    'ranking'      => $request->txtpopupvalue
+                ]);
+            }
+            else if($request->hdnfld == 'bn') //Broad Area
             {
                 $broadarea = new broadareas();
     
                 $broadarea->broadarea = $request->txtpopupvalue;
                 $broadarea->save();
+            }
+            elseif($request->hdnfld == 'be')
+            {
+                $ranking = new broadareas();
+                $data = broadareas::whereId($request->txtpopupeditid)->first();
+
+                $data->update([ //updateing to Rankings table
+                    'broadarea'      => $request->txtpopupvalue
+                ]);
             }
 
             else //main page saving
@@ -329,5 +352,39 @@ class PublicationController extends Controller
                         ->get();                
 
         return response()->json($data);                
+    }
+
+    function showrankings()
+    {
+        // Fetch only Rankings -> Others
+        $rankingsOnlyAstarData = rankings::select('id','ranking')
+        ->where('ranking','=','Core A*')
+        ->get();                        
+                    
+        // Fetch w/o Rankings -> Others
+        $rankingsNoOthersData = rankings::orderby("ranking","asc")
+                            ->select('id','ranking')
+                            ->whereNotIn('ranking', ['Core A*','Others'])
+                            ->get();                         
+
+        // Fetch only Rankings -> Others
+        $rankingsOnlyOthersData = rankings::select('id','ranking')
+        ->where('ranking','=','Others')
+        ->get();
+
+        //Fetch all rankings in
+        $rankingsData = $rankingsOnlyAstarData->merge($rankingsNoOthersData)->merge($rankingsOnlyOthersData);
+        
+        return response()->json($rankingsData);
+    }
+
+    function showbroadarea()
+    {
+        //Fetch Broadareas
+        $broadareasData = broadareas::orderby("broadarea","asc")
+        ->select('id','broadarea')
+        ->get();
+
+        return response()->json($broadareasData);
     }
 }

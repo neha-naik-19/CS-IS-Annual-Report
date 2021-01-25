@@ -346,11 +346,11 @@ $(document).ready(function()
         }
         else{$('#updatedterror').text('');}
 
-        if($('#updateplace').val() == ''){
-            $('#errorupdate-place').text('*');
-            errorplaceholderupdate = 1;
-            validateupdate = 1;
-        }
+        // if($('#updateplace').val() == ''){
+        //     $('#errorupdate-place').text('*');
+        //     errorplaceholderupdate = 1;
+        //     validateupdate = 1;
+        // }
 
         if($("#updatecategory option:selected").text().toLowerCase() == "journal"){
             if($('#updatetitle').val() == ''){
@@ -383,7 +383,7 @@ $(document).ready(function()
 
         if(rowCount == 1 && firstcolvalue == '')
         {
-            alertbox_update('Alert','At least one Author is mandatry.','OK'); 
+            alertbox_update('Alert','At least one Author is mandatory.','OK'); 
             validateupdate = 1;
         }
 
@@ -416,7 +416,7 @@ $(document).ready(function()
                         console.log('errorType : ' + errorType + " exception : " + exception)
                     if(xhr.status == 419)
                     {
-                        $(".modal").css("display", "block");
+                        $("#myModal3").css("display", "block");
                     }
                     else
                     {
@@ -429,11 +429,11 @@ $(document).ready(function()
     });
 
     $('#spanclose').click(function() {
-        $(".modal").css("display", "none");
+        $("#myModal3").css("display", "none");
     });
 
     $(window).click(function(e) {
-        $(".modal").css("display", "none");
+        $("#myModal3").css("display", "none");
     });
 
     $('#updatedatefld').change(function() {
@@ -443,12 +443,12 @@ $(document).ready(function()
         }
     });
 
-    $('#updateplace').keypress(function() {
-        if(errorplaceholderupdate = 1 && $(this).val() != "" && $('#errorupdate-place').text() == '*'){
-            $('#errorupdate-place').text('');
-            errorplaceholderupdate = 0;
-        }
-    });
+    // $('#updateplace').keypress(function() {
+    //     if(errorplaceholderupdate = 1 && $(this).val() != "" && $('#errorupdate-place').text() == '*'){
+    //         $('#errorupdate-place').text('');
+    //         errorplaceholderupdate = 0;
+    //     }
+    // });
 
     $('#updatetitle').keypress(function() {
         if(errorplaceholderupdate = 1 && $(this).val() != "" && $('#errorupdate-title').text() == '*'){

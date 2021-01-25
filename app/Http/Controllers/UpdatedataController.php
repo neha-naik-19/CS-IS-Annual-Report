@@ -59,19 +59,24 @@ class UpdatedataController extends Controller
             }
         }                        
                                 
+        // Fetch only Rankings -> Others
+        $rankingsOnlyAstarData = rankings::select('id','ranking')
+        ->where('ranking','=','Core A*')
+        ->get();                        
+                    
         // Fetch w/o Rankings -> Others
         $rankingsNoOthersData = rankings::orderby("ranking","asc")
-                                ->select('id','ranking')
-                                ->where('ranking','<>','Others')
-                                ->get();                         
+        ->select('id','ranking')
+        ->whereNotIn('ranking', ['Core A*','Others'])
+        ->get();                         
 
         // Fetch only Rankings -> Others
         $rankingsOnlyOthersData = rankings::select('id','ranking')
-                                ->where('ranking','=','Others')
-                                ->get();
+        ->where('ranking','=','Others')
+        ->get();
 
-        //Fetch all rankings in                        
-        $rankingsData['data'] = $rankingsNoOthersData->merge($rankingsOnlyOthersData);
+        //Fetch all rankings in
+        $rankingsData['data'] = $rankingsOnlyAstarData->merge($rankingsNoOthersData)->merge($rankingsOnlyOthersData);
                                 
         // Fetch Broadareas
         $broadareasData['data'] = broadareas::orderby("broadarea","asc")

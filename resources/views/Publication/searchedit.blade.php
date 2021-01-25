@@ -111,10 +111,11 @@
                     <th style="width: 10em; font-size: .9em;">Volume</th>
                     <th style="width: 10em; font-size: .9em;">Issue</th>
                     <th style="width: 10em; font-size: .9em;">Pages</th>
-                    <th style="width: 10em; font-size: .9em;">DIO</th>
-                    <th style="width: 4em; font-size: .9em;">Edit</th>
-                    <th style="width: 4em; font-size: .9em;">Delete</th>
+                    <th style="width: 10em; font-size: .9em;">DOI</th>
+                    <th class="hidetd" style="width: 4em; font-size: .9em;">Edit</th>
+                    <th class="hidetd" style="width: 4em; font-size: .9em;">Delete</th>
                     <th hidden>hdrid</th>
+                    <th hidden>userid</th>
                 </tr>
             </thead>
             <tbody>
@@ -132,16 +133,18 @@
         <span class="glyphicon glyphicon-search"></span> Search</button>
         
         <!-- <button id="btnprintrefresh" class="btn btn-danger" tabindex="">Refresh</button> -->
-        <button type="submit" id="btnsearchrefresh" class="btn btn-danger" tabindex="13" style="outline: none;" >
+        <button id="btnsearchrefresh" class="btn btn-danger" tabindex="13" style="outline: none;" >
         <span class="glyphicon glyphicon-refresh"></span> Refresh</button>
     </div>    
 </div>
 
 <div id="myModal1" class="modal">
     <!-- Modal content -->
-    <div class="modal-content">
-        <span id="spanclose1" class="close">&times;</span>
-        <label style="font-size: 20px;"><strong>The page has been expired.</strong></label>
-        <label style="font-size: 15px; color : red;"><strong>Please Login again.</strong></label>
-    </div>
+    <!-- <div class="modal-dialog" id="modaldialog1" role="document"> -->
+        <div id="idmodalcontent" class="modal-content">
+            <span id="spanclose1" class="closeexpire">&times;</span>
+            <label style="font-size: 20px; padding-left: 10px; padding-bottom: 10px; padding-top: 5px;"><strong>The page has been expired.</strong></label>
+            <label style="font-size: 15px; color : red; padding-left: 10px; padding-bottom: 10px;"><strong>Please Login again.</strong></label>
+        </div>
+    <!-- </div> -->
 </div>

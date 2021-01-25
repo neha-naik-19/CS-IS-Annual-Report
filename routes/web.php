@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\PrintController;
+use App\Http\Controllers\ViewController;
+use App\Http\Controllers\ViewdetaileddataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,9 +39,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 
 Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::resource('publication', 'PublicationController');
+    Route::resource('view', 'ViewController');
     Route::resource('print', 'PrintController');
     Route::resource('searchedit', 'SearcheditController');
     Route::resource('updatedata','UpdatedataController');
+    Route::resource('viewdata','ViewdetaileddataController');
 });
 
 /* Login Routes */
@@ -96,7 +100,10 @@ Route::post('displaysearch',[App\Http\Controllers\SearcheditController::class, '
 Route::post('deletesearch/{id}', [App\Http\Controllers\SearcheditController::class, 'destroy']);
 Route::get('allrankings', [App\Http\Controllers\SearcheditController::class, 'showrankings']);
 Route::get('editsearch', [App\Http\Controllers\SearcheditController::class, 'showauthor']);
+Route::get('loginuser',[App\Http\Controllers\SearcheditController::class, 'loginuser']);
 
+/************************************************************************************/
+/* Print Routes */
 Route::get('dynamic_pdf/pdf', [App\Http\Controllers\PrintController::class, 'loadpdf']);
 Route::get('dynamic_word/wordexport', [App\Http\Controllers\PrintController::class, 'createworddocx']);
 
@@ -111,3 +118,13 @@ Route::get('/CS-IS/login-expire', function () {
 
 Route::get('login/{website}', [App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider']);
 Route::get('login/{website}/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback']);
+
+Route::get('showranking',[PublicationController::class, 'showrankings']);
+
+Route::get('showbroadarea',[PublicationController::class, 'showbroadarea']);
+
+/************************************************************************************/
+/* View Routes */
+Route::get('viewsearch', [App\Http\Controllers\ViewController::class, 'showviewauthor']);
+Route::post('displayviewsearch',[App\Http\Controllers\ViewController::class, 'getviewsearchresult']);
+Route::get('publicationview/{id}', [App\Http\Controllers\ViewdetaileddataController::class, 'index']);

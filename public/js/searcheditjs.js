@@ -1,3 +1,7 @@
+
+
+/************************************/
+
 $(document).ready(function(){
 
     var getheaderid = 0;
@@ -107,6 +111,71 @@ $(document).ready(function(){
         return arrcheck;
     }
 
+    function userauthonticate(){
+        var url = $('#application_url').val();
+
+        var pubidArray=[];
+        $('#auth_search_edit > tbody  > tr').each(function() { 
+            pubidArray.push( $(this).find('td:eq(18)').text())  
+         });
+
+         var hidetd = 0;
+         var showtd = 0;
+ 
+        $.ajax({
+            url: url + "/loginuser",
+            dataType: "json",
+            success: function (data) {
+                $('#auth_search_edit > tbody  > tr').each(function() {
+                    eachuserid = $(this).find('td:eq(19)').text();
+                    if(data != eachuserid)
+                    {
+                        // alert($(this).find("td").eq(16).attr('id'))
+                        // $('#tdedit').find("img").remove();
+                        // $(this).find('td:eq(16)').find("img").hide();
+                        // $(this).find('td:eq(17)').find("img").hide();
+
+                        $(this).find('td:eq(16)').find("img").addClass("hidetd");
+                        $(this).find('td:eq(17)').find("img").addClass("hidetd");
+
+                        hidetd++;
+                    }
+                    else
+                    {
+                        $(this).find('td:eq(16)').find("img").removeClass("hidetd");
+                        $(this).find('td:eq(17)').find("img").removeClass("hidetd");
+
+                        showtd++;
+                    }
+                });
+
+                if(hidetd > 0 && showtd == 0)
+                {
+                    // $('#tdedit').hide();
+                    // $('#tddelete').hide();
+
+                    $('#auth_search_edit > thead  > tr > th').eq("16").addClass("hidetd");
+                    $('#auth_search_edit > thead  > tr > th').eq("17").addClass("hidetd");
+
+                    $('#auth_search_edit > tbody  > tr').each(function() {
+                        $(this).find('td:eq(16)').addClass("hidetd");
+                        $(this).find('td:eq(17)').addClass("hidetd");
+                    });
+                }
+                else
+                {
+                    $('#auth_search_edit > thead  > tr > th').eq("16").removeClass("hidetd");
+                    $('#auth_search_edit > thead  > tr > th').eq("17").removeClass("hidetd");
+
+                    $('#auth_search_edit > tbody  > tr').each(function() {
+                        $(this).find('td:eq(16)').removeClass("hidetd");
+                        $(this).find('td:eq(17)').removeClass("hidetd");
+                    });
+                }
+            }
+        });
+    }
+
     function search_data(){
         var frmdate = $("#searchdatefldfrom").val();
         var todate = $("#searchdatefldto").val();
@@ -132,6 +201,8 @@ $(document).ready(function(){
             {
                 //$('#auth_search_edit tbody').html(data.search_data);
                 $('#auth_search_edit tbody').html(data);
+
+                userauthonticate();
             },  
             error:function(xhr, errorType, exception){
                 console.log(xhr.responseText)

@@ -5,6 +5,7 @@
 @include('pubheader')
 
     <input type="hidden" name="application_url" id="application_url" value="{{URL::to(Request::route()->getPrefix())}}"/>
+    <input type="hidden" name="hdn_login_user" id="hdn_login_user" value="{{ Auth::user()->name }}">
 
     <form class="my-form" id="main-form" autocomplete="off" method="POST" action="{{ route('publication.store') }}" >
 
@@ -135,7 +136,7 @@
                 </div>
 
                 <div class="details">
-                    <label class="lblindx" for="author" id="lblauthor">Authors (Sl. No. is the First Author): </label>
+                    <label class="lblindx" for="author" id="lblauthor">Authors <strong>(Sl. No. 1 is the first Auntor) </strong>:</label>
 
                     <input type="hidden" id="hdninput" name="hdninput" value="0">
                     <input type="hidden" id="hdnrindex" name="hdnrindex" value="0">
@@ -184,6 +185,10 @@
                     <div>
                         <span id="error-author-name" class="text-danger"></span>
                     </div>
+                    <div id="divupdown" style="padding-top:0.5em; position:Absolute; right:3em; display:none;">
+                        <button type="button" id="btnup" class="up describe" onclick="upNdown('up')"><b>&ShortUpArrow;</b></button>
+                        <button type="button" id="btndown" class="down describe" onclick="upNdown('down')"><b>&ShortDownArrow;</b></button>
+                    </div>
                     <div class="pagination-container">
                         <nav>
                             <ul class="pagination" id="ulpagination">
@@ -207,10 +212,10 @@
 
     <div id="myModal" class="modal">
         <!-- Modal content -->
-        <div class="modal-content">
-            <span id="spanclose" class="close">&times;</span>
-            <label style="font-size: 20px;"><strong>The page has been expired.</strong></label>
-            <label style="font-size: 15px; color : red;"><strong>Please Login again.</strong></label>
+        <div id="idmodalcontent" class="modal-content">
+            <span id="spanclose" class="closeexpire">&times;</span>
+            <label style="font-size: 20px; padding-left: 10px; padding-bottom: 10px; padding-top: 5px;"><strong>The page has been expired.</strong></label>
+            <label style="font-size: 15px; color : red; padding-left: 10px; padding-bottom: 10px;"><strong>Please Login again.</strong></label>
         </div>
     </div>
 
@@ -231,13 +236,21 @@
             <form action="{{ route('publication.store') }}" method="post" autocomplete="off">
                 @csrf
                 <div class="modal-body">
-                <div class="form-group">
-                    <input type="hidden" name="hdnfld" id="hdnfld" value=''>
-                    <input type="text" name="txtpopup" id="txtpopup" class="form-control" placeholder=" Ranking">
-                    <span id="error-popup" class="text-danger"></span>
-                </div>
+                    <div class="form-group">
+                        <input type="hidden" name="hdnfld" id="hdnfld" value=''>
+
+                        <div class="div-1">
+                            <select class="selectmainpage" name="selpopup" id="selpopup" tabindex="7">
+                                
+                            </select>
+                        </div>
+                        <input type="text" style="display:none;" name="txtselid" id="txtselid">
+                        <input type="text" class="inputmainpage txtinput" name="txtpopup" id="txtpopup" class="form-control" placeholder=" Ranking">
+                        <span id="error-popup" class="text-danger"></span>
+                    </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="button btnpopup" id="btnpopupedit">Edit</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" id="popupsave" class="btn btn-primary">Save</button>
                 </div>
@@ -247,6 +260,19 @@
 </div>
 <!-- End Modal -->
 
+@endsection
+
+@section('viewcontent')
+@include('pubheader')
+    <div>
+        <form id="view-form" autocomplete="off" action="{{ route('view.index') }}" method="POST">
+            @csrf
+            <div class="viewclass">
+                @include('Publication.view')
+            </div>
+        </form>
+    </div>
+@include('pubfooter')
 @endsection
 
 @section('printcontent')

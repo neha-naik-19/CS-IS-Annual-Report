@@ -472,11 +472,11 @@ $(document).ready(function()
   });
 
     $('#spanclose2').click(function() {
-        $(".modal").css("display", "none");
+        $("#myModal2").css("display", "none");
     });
 
     $(window).click(function(e) {
-        $(".modal").css("display", "none");
+        $("#myModal2").css("display", "none");
     });
 
   $('#divprint a').bind('click',function(e) {

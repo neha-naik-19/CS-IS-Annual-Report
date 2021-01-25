@@ -18,37 +18,36 @@
 
     <!-- Styles -->
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script> -->
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-  
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <!-- Include Bootstrap Datepicker -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    
     <link rel="stylesheet" type="text/css" href="../css/projectstyle.css">
 
     <script src="{{ asset('js/basicjs.js') }}" defer></script>
     <script src="{{ asset('js/printjs.js') }}" defer></script>
     <script src="{{ asset('js/searcheditjs.js') }}" defer></script>
     <script src="{{ asset('js/editjs.js') }}" defer></script>
+    <script src="{{ asset('js/viewjs.js') }}" defer></script>
 
     <title>Annual Report</title>
   </head>
@@ -104,8 +103,10 @@
         <div class="layoutmain" > 
           <div class="tab" >
             <a href="#new" style="text-decoration:none"><button id="defaultopen" class="tablinks" onclick="openTab(event,'newentry')" >New</button></a>
+            <a href="#new" style="text-decoration:none"><button id="btnview" class="tablinks" onclick="openTab(event,'viewentry')" >View</button></a>
             <a href="#edit" style="text-decoration:none"><button id="btnsearch" class="tablinks" onclick="openTab(event,'searchedit')">Edit</button></a>
             <a href="#print" style="text-decoration:none"><button id="btnprint" class="tablinks" onclick="openTab(event,'printpdf')">Print</button></a>
+            <a href="#bibtex" style="text-decoration:none"><button id="btnbibtex" class="tablinks" onclick="openTab(event,'bibtex')">BIBTEX</button></a>
           </div>
 
           <div class="maincontent">
@@ -113,9 +114,17 @@
               @yield('maincontent')
             </div>
 
+            <div class="tabcontent" id="viewentry">
+            @yield('viewcontent')
+            </div>
+
             <div class="tabcontent" id="printpdf">
               @yield('printcontent')
             </div>
+
+            <div class="tabcontent" id="bibtex">
+              <p>Bib Tex</p>
+            </div> 
 
             <div class="tabcontent" id="searchedit">
               @yield('searcheditcontent')

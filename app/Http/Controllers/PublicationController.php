@@ -215,6 +215,7 @@ class PublicationController extends Controller
                     $pubhdr->issue = ($request->issue != null) ? $request->issue : null;
                     $pubhdr->pp = ($request->pp != null) ? $request->pp : null;
                     $pubhdr->digitallibrary = ($request->digitallibrary != null) ? $request->digitallibrary : null;
+                    $pubhdr->publisher = $request->publisher;
                     $pubhdr->userid = $userid;
                     $pubhdr->deleted  = 0;
                     $pubhdr->created_at = Carbon::now();
@@ -386,5 +387,55 @@ class PublicationController extends Controller
         ->get();
 
         return response()->json($broadareasData);
+    }
+
+    //Title
+    function get_title_data(Request $request)
+    {
+        Session::forget('title_data');
+
+        session()->put('title_data', trim($request->duptitle));
+    }
+
+    function check_dup_title()
+    {
+        $title = session()->get('title_data');
+
+        $titledata =  pubhdr::where('title',$title)->where('deleted','0')->get(['title']);
+
+        if (count($titledata) > 0){
+            $titledata =  pubhdr::where('title',$title)->where('deleted','0')->first()->title;
+        }
+        else
+        {
+            $titledata = null;
+        }
+
+        echo json_encode($titledata);
+    }
+
+    //Conference
+    function get_conference_data(Request $request)
+    {
+        Session::forget('conference_data');
+
+        session()->put('conference_data', trim($request->dupconference));
+    }
+
+    function check_dup_conference()
+    {
+        $conference = session()->get('conference_data');
+
+        $conferencedata =  pubhdr::where('confname',$conference)->where('deleted','0')->get(['confname']);
+
+        if (count($conferencedata) > 0){
+            $conferencedata =  pubhdr::where('confname',$conference)->where('deleted','0')->first()->confname;
+        }
+        else
+        {
+            $conferencedata = null;
+        }
+
+        echo json_encode($conferencedata);
     }
 }

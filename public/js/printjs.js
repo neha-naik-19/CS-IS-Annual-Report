@@ -570,9 +570,19 @@ $(document).ready(function()
       $('#hidden_frmdt').val('');
   });
 
+  function refresh_local_print()
+  {
+    $('#print-form')[0].reset();
+    $('#hidden_category').val('');
+    $('#hidden_category').val('');
+    $('#auth-sel-data tbody').html('');
+    $('#auth-sel-data tbody').append('<tr><td></td><td></td><td></td><td></td></tr>');
+  }
+
   $('#btnprintrefresh').click(function(e) {
         e.preventDefault();
-        refresh_print();
+        // refresh_print();
+        refresh_local_print();
 
         var url = $('#application_url').val();
 

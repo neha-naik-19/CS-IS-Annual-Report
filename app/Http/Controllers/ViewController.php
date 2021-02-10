@@ -14,7 +14,12 @@ class ViewController extends Controller
      */
     public function index()
     {
-        return view('Publication.view');
+        // Fetch Categories
+        $categoryData['data'] = categories::orderby("category","asc")
+        ->select('id','category')
+        ->get();
+
+        return view('Publication.view')->with("categoryData",$categoryData);
     }
 
     /**
@@ -139,10 +144,11 @@ class ViewController extends Controller
     public function getviewsearchresult(Request $request){
         $fromdt = $request->get('frmdate');
         $todt = $request->get('todate');
-        $authors = $request->get('author');
+        $author = $request->get('author');
+        $category = $request->get('category');
 
-        $data =  DB::select('call Get_Search_View_Data (?,?,?)', 
-                array($fromdt,$todt,$authors));
+        $data =  DB::select('call Get_Search_View_Data (?,?,?,?)', 
+                array($fromdt,$todt,$author,$category));
 
         $output = '';
         
@@ -152,10 +158,12 @@ class ViewController extends Controller
             {
                 $output .= '<tr>
                 <td>' . $row->publicationdate . '</td>
+                <td>' . $row->category . '</td>
                 <td>' . $row->authorname . '</td>
                 <td>' . $row->title . '</td>
                 <td>' . $row->confname . '</td>
-                <td style="text-align: center;"><a target="_blank" href='. url('publicationview/'.base64_encode($row->hdrid)) .'><img id="imgview" src="../image/eyeicon.png"></a></td>';
+                <td style="text-align: center;"><a target="_blank" href='. url('publicationview/'.base64_encode($row->hdrid)) .'><img id="imgview" src="../image/eye_icon.png"></a></td>
+                <td style="display: none;">' . $row->hdrid . '</td>';
             }
         }
 

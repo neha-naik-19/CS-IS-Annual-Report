@@ -180,25 +180,31 @@
                     <input type="text" class="inputmainpage txtinput" tabindex="15" name="updatedigitallibrary" id="updatedigitallibrary" placeholder=" DOI" value="{{ $publicationdata->doi }}">
                 </div>
 
+                <div class="div-1">
+                    <label class="lblindx" for="publisher">Publisher:</label>
+                    <input type="text" class="inputmainpage txtinput" tabindex="16" name="publisher" id="publisher" placeholder=" Publisher" value="{{ $publicationdata->publisher }}">
+                </div>
+                <br>
+
                 <div class="details">
                     <label class="lblindx" for="author" id="lblauthor">Authors (Sl. No. is the First Author): </label>
 
                     <input type="hidden" id="hdnupdateinput" name="hdnupdateinput" value="0">
                     <input type="hidden" id="hdnupdaterindex" name="hdnupdaterindex" value="0">
                     
-                    <input type="text" id="updatefirstname" name="updatefirstname" placeholder=" First Name" tabindex="16" onkeyup="disableupdateinputs()">
+                    <input type="text" id="updatefirstname" name="updatefirstname" placeholder=" First Name" tabindex="17" onkeyup="disableupdateinputs()">
 
-                    <input type="text" id="updatemiddlename" name="updatemiddlename" placeholder=" Middle Name" tabindex="17" onkeyup="disableupdateinputs()">
+                    <input type="text" id="updatemiddlename" name="updatemiddlename" placeholder=" Middle Name" tabindex="18" onkeyup="disableupdateinputs()">
 
-                    <input type="text" id="updatelastname" name="updatelastname" placeholder=" Last Name" tabindex="18" onkeyup="disableupdateinputs()">
+                    <input type="text" id="updatelastname" name="updatelastname" placeholder=" Last Name" tabindex="19" onkeyup="disableupdateinputs()">
 
                     <input type="text" id="updateslno" name="slno" style="display: none">
 
                     <input type="text" id="updatecheckauthorentry" name="updatecheckauthorentry" style="display: none">
 
-                    <button id="btnupdateadd" disabled onclick="AddUpdateAuthor(event)"><img src="../image/Add-icon-button-small.png" tabindex="19"></button>
+                    <button id="btnupdateadd" disabled onclick="AddUpdateAuthor(event)"><img src="../image/Add-icon-button-small.png" tabindex="20"></button>
                     
-                    <button id="btnupdaterefresh" onclick="refreshupdate(event)"><img src="../image/refresh-icon.png" tabindex="20"></button>
+                    <button id="btnupdaterefresh" onclick="refreshupdate(event)"><img src="../image/refresh-icon.png" tabindex="21"></button>
 
                     <table id="update-author-data" class="author-data">
                         <thead>
@@ -230,7 +236,7 @@
                     <span id="update-error-author" class="text-danger"></span>
                 </div> <!-- details-->
                 <div id="update-button" class="submit-button">
-                    <button type="submit" id="btnupdate" class="btn btn-danger" tabindex="21" style="outline: none;">
+                    <button type="submit" id="btnupdate" class="btn btn-danger" tabindex="22" style="outline: none;">
                     <span class="glyphicon glyphicon-edit"></span>
                     Update</button>   
                 </div>  

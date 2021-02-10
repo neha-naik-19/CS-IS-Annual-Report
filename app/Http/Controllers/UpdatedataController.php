@@ -188,6 +188,7 @@ class UpdatedataController extends Controller
                     'issue'          => ($request->updateissue != null) ? $request->updateissue : null,
                     'pp'             => ($request->updatepp != null) ? $request->updatepp : null,
                     'digitallibrary' => ($request->updatedigitallibrary != null) ? $request->updatedigitallibrary : null,
+                    'publisher'      => $request->publisher,
                     'userid'         => $userid,
                     'updated_at'     => Carbon::now()
                 ]);

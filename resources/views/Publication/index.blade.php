@@ -135,25 +135,30 @@
                     <input type="text" class="inputmainpage txtinput" tabindex="16" name="digitallibrary" id="digitallibrary" placeholder=" DOI">
                 </div>
 
+                <div class="div-1">
+                    <label class="lblindx" for="publisher">Publisher:</label>
+                    <input type="text" class="inputmainpage txtinput" tabindex="17" name="publisher" id="publisher" placeholder=" Publisher">
+                </div>
+                <br>
                 <div class="details">
                     <label class="lblindx" for="author" id="lblauthor">Authors <strong>(Sl. No. 1 is the first Auntor) </strong>:</label>
 
                     <input type="hidden" id="hdninput" name="hdninput" value="0">
                     <input type="hidden" id="hdnrindex" name="hdnrindex" value="0">
                     
-                    <input type="text" id="firstname" name="firstname" placeholder=" First Name" tabindex="17" onkeyup="disableinputs()">
+                    <input type="text" id="firstname" name="firstname" placeholder=" First Name" tabindex="18" onkeyup="disableinputs()">
 
-                    <input type="text" id="middlename" name="middlename" placeholder=" Middle Name" tabindex="18" onkeyup="disableinputs()">
+                    <input type="text" id="middlename" name="middlename" placeholder=" Middle Name" tabindex="19" onkeyup="disableinputs()">
 
-                    <input type="text" id="lastname" name="lastname" placeholder=" Last Name" tabindex="19" onkeyup="disableinputs()">
+                    <input type="text" id="lastname" name="lastname" placeholder=" Last Name" tabindex="20" onkeyup="disableinputs()">
 
                     <input type="text" id="slno" name="slno" style="display: none">
 
                     <input type="text" id="checkauthorentry" name="checkauthorentry" style="display: none">
 
-                    <button id="btnadd" disabled onclick="AddAuthor(event)"><img src="../image/Add-icon-button-small.png" tabindex="20"></button>
+                    <button id="btnadd" disabled onclick="AddAuthor(event)"><img src="../image/Add-icon-button-small.png" tabindex="21"></button>
                     
-                    <button id="btnrefresh" onclick="refresh(event)"><img src="../image/refresh-icon.png" tabindex="21"></button>
+                    <button id="btnrefresh" onclick="refresh(event)"><img src="../image/refresh-icon.png" tabindex="22"></button>
 
                     <table id="author-data" class="author-data">
                         <thead>
@@ -198,11 +203,11 @@
                     </div>
                 </div> <!-- details-->
                 <div id="submit-button" class="submit-button">
-                    <button type="submit" id="btnsubmit" class="btn btn-danger" tabindex="22" style="outline: none;">
+                    <button type="submit" id="btnsubmit" class="btn btn-danger" tabindex="23" style="outline: none;">
                     <span class="glyphicon glyphicon-save"></span>
                     Save</button>
 
-                    <button type="submit" id="pagereset" class="btn btn-danger" tabindex="23" style="outline: none;">
+                    <button type="submit" id="pagereset" class="btn btn-danger" tabindex="24" style="outline: none;">
                     <span class="glyphicon glyphicon-refresh"></span>
                     Refresh</button>
                 </div>
@@ -287,6 +292,19 @@
     </div>
 @include('pubfooter')
 @endsection
+
+@section('bibtexcontent')
+@include('pubheader')
+    <div>
+        <form id="bibtex-form" autocomplete="off" action="{{ route('bibtex.index') }}" method="POST">
+            @csrf
+            <div class="bibtextclass">
+                @include('Publication.bibtex')
+            </div>
+        </form>
+    </div>
+    @include('pubfooter')
+@endsection 
 
 @section('searcheditcontent')
 @include('pubheader')

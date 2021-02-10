@@ -36,11 +36,16 @@
                 <div class="update-1">
                     <label class="lblindx">Demography:</label>
                     <select class="selectmainpage" name="viewdatanationality" id="viewdatanationality" tabindex="4" style="pointer-events:none;">
-                        @if($publicationdata->nationality =='1')
-                            <option value='1' selected>National</option>
+                        @if(is_null($publicationdata->nationality))
+                            <option value='0' selected>None</option>
                         @endif
-                        @if($publicationdata->nationality =='2')
-                            <option value='2' selected>International</option>
+
+                        @if($publicationdata->nationality == 1)
+                            <option value="1">National</option>
+                        @endif
+
+                        @if($publicationdata->nationality == 2)
+                            <option value="2">International</option>
                         @endif
                     </select>
                 </div>
@@ -48,21 +53,37 @@
                 <div class="update-1">
                     <label class="lblindx">Type of Conference:</label>
                     <select class="selectmainpage" name="viewdataarticle" id="viewdataarticle" tabindex="5" style="pointer-events:none;">
-                        <option value='{{ $publicationdata->articletypeid }}' selected>{{ $publicationdata->article }}</option>   
+                        @if(is_null($publicationdata->articletypeid))
+                            <option value="0">None</option>
+                        else
+                            <option value="{{ $publicationdata->articletypeid }}">{{ $publicationdata->article }}</option>
+                        @endif
                     </select>
                 </div>
 
                 <div class="update-1">
                     <label class="lblindx" for="ranking">Ranking:</label>
                     <select class="selectmainpage" name="viewdataranking" id="viewdataselranking" tabindex="6" style="pointer-events:none;">
-                        <option value='{{ $publicationdata->rankingid }}' selected>{{ $publicationdata->ranking }}</option>
+                        @if(is_null($publicationdata->rankingid))
+                            <option value="0">None</option>
+                        @endif
+
+                        @if(!is_null($publicationdata->rankingid))
+                            <option value="{{ $publicationdata->rankingid }}">{{ $publicationdata->ranking }}</option>
+                        @endif
                     </select>
                 </div>
 
                 <div class="update-1">
                     <label class="lblindx" for="broadarea">Broad Area:</label>
                     <select class="selectmainpage" name="viewdataselbroadarea" id="viewdataselbroadarea" tabindex="7" style="pointer-events:none;">
-                        <option value='{{ $publicationdata->broadareaid }}' selected>{{ $publicationdata->broadarea }}</option>
+                        @if(is_null($publicationdata->broadareaid))
+                            <option value="0">None</option>
+                        @endif
+
+                        @if(!is_null($publicationdata->broadareaid))
+                            <option value="{{ $publicationdata->broadareaid }}">{{ $publicationdata->broadarea }}</option>
+                        @endif
                     </select>
                 </div>
 
@@ -109,6 +130,10 @@
                 <label class="lblindx" for="digitallibrary">DOI:</label>
                 <input style="pointer-events:none;" type="text" class="inputmainpage txtinput" tabindex="15" name="viewdatadigitallibrary" id="viewdatadigitallibrary" placeholder=" DOI" value="{{ $publicationdata->doi }}">
             </div>
+            <div class="update-1">
+                    <label class="lblindx" for="publisher">Publisher:</label>
+                    <input style="pointer-events:none;" type="text" class="inputmainpage txtinput" name="publisher" id="publisher" placeholder=" Publisher" value="{{ $publicationdata->publisher }}">
+                </div>
             <br>
             <div class="details">
                 <label class="lblindx" for="author" id="lblauthor">Authors (Sl. No. is the First Author): </label>

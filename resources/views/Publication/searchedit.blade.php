@@ -1,4 +1,6 @@
 
+<!-- searchedit_lauout.blade.php -->
+
 <input type="hidden" name="application_url" id="application_url" value="{{URL::to(Request::route()->getPrefix())}}"/>
 
 <div class="mainsearch">

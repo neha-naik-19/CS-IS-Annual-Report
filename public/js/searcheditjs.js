@@ -329,9 +329,22 @@ $(document).ready(function(){
         Confirm('Delete', 'Are you sure you want to delete this record?', 'Yes', 'Cancel');
     });
 
+    function refresh_local_searh_edit(){
+        $('#searchedit-form')[0].reset();
+
+        //Autnor search table
+        $('#auth-edit-data tbody').html('');
+        $('#auth-edit-data tbody').append('<tr><td></td><td></td><td></td><td></td></tr>');
+
+        //Main data search Table
+        $('#auth_search_edit tbody').html('');
+    }
+
     $('#btnsearchrefresh').click(function(e) {
         e.preventDefault();
-        refresh_search();
+        //refresh_search();
+
+        refresh_local_searh_edit();
     });
 
     function addCheckbox() {

@@ -5,6 +5,7 @@ use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\PrintController;
 use App\Http\Controllers\ViewController;
 use App\Http\Controllers\ViewdetaileddataController;
+use App\Http\Controllers\BibtexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::resource('searchedit', 'SearcheditController');
     Route::resource('updatedata','UpdatedataController');
     Route::resource('viewdata','ViewdetaileddataController');
+    Route::resource('bibtex','BibtexController');
 });
 
 /* Login Routes */
@@ -55,6 +57,12 @@ Route::post('foo', [App\Http\Controllers\PublicationController::class, 'foo']);
 Route::post('getcategory', [App\Http\Controllers\PublicationController::class, 'getcategory']);
 Route::get('readfromdb', [App\Http\Controllers\PublicationController::class, 'show']);
 Route::get('category', [App\Http\Controllers\PublicationController::class, 'showarticle']);
+
+Route::post('gettitle', [App\Http\Controllers\PublicationController::class, 'get_title_data']);
+Route::get('check_title_duplication', [App\Http\Controllers\PublicationController::class, 'check_dup_title']);
+
+Route::post('getconference', [App\Http\Controllers\PublicationController::class, 'get_conference_data']);
+Route::get('check_conference_duplication', [App\Http\Controllers\PublicationController::class, 'check_dup_conference']);
 
 /* Print Routes */
 Route::get('printsearch', [App\Http\Controllers\PrintController::class, 'action']);
@@ -128,3 +136,12 @@ Route::get('showbroadarea',[PublicationController::class, 'showbroadarea']);
 Route::get('viewsearch', [App\Http\Controllers\ViewController::class, 'showviewauthor']);
 Route::post('displayviewsearch',[App\Http\Controllers\ViewController::class, 'getviewsearchresult']);
 Route::get('publicationview/{id}', [App\Http\Controllers\ViewdetaileddataController::class, 'index']);
+
+/************************************************************************************/
+/* BibTex Routes */
+
+Route::post('readbibtex', [App\Http\Controllers\BibtexController::class, 'store']);
+Route::post('getfiledata', [App\Http\Controllers\BibtexController::class, 'get_file_data']);
+Route::get('checkduplication', [App\Http\Controllers\BibtexController::class, 'display_duplicate_on_js']);
+
+

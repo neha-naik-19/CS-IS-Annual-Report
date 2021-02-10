@@ -120,7 +120,7 @@ $(document).ready(function()
 
         if(vilidateview == 1)
         {
-            alertbox_view('Alert','Please select all search criteria.','OK'); 
+            alertbox_view('Alert','Please select Year and Author or Category as search criteria.','OK'); 
 
             return false;
         }
@@ -128,15 +128,23 @@ $(document).ready(function()
         search_view_data();
     });
 
+    function refresh_local_view()
+    {
+        $('#view-form')[0].reset();
+        $('#view_auth_details_display tbody').html('');
+        $('#view_auth_details_display tbody').append('<tr><td></td><td></td><td></td><td></td><td></td><td style="text-align: center;"><img id="imgviewedit" src="../image/eye_icon.png"></td><td style="display: none;></td></tr>');
+    }
+
     $('#btn_view_refresh').click(function(event){
         event.preventDefault();
-
-        refresh_view();
+        //refresh_view();
+        refresh_local_view();
     });
 
     function search_view_data(){
         var frmdate = $("#viewdatefldfrom").val();
         var todate = $("#viewdatefldto").val();
+        var category = $("#viewcategory").val();
         var author = $("#author_view_search").val();
 
         var url = $('#application_url_view').val();
@@ -148,18 +156,20 @@ $(document).ready(function()
             type: 'POST',
             dataType: 'text',
             url: url + '/displayviewsearch',
-            data: {'frmdate': (frmdate != "") ? frmdate : null,'todate': (todate != "") ? todate : null, 'author':(author != "") ? author : null},
+            data: {'frmdate': (frmdate != "") ? frmdate : null,'todate': (todate != "") ? todate : null,'category': (category != "0") ? category : null, 'author':(author != "") ? author : null},
             success:function(data)
             {
 
-                $('#view_auth_details_display tbody').html('');
+                $('tbody').html('');
 
                 if(data.length == 0)
                 {
-                    $('#view_auth_details_display tbody').append('<tr><td></td><td></td><td></td><td></td><td style="text-align: center;"><img id="imgviewedit" src="../image/eyeicon.png"></td><td style="display: none;></td></tr>')
+                    $('#view_auth_details_display tbody').append('<tr><td></td><td></td><td></td><td></td><td></td><td style="text-align: center;"><img id="imgviewedit" src="../image/eye_icon.png"></td><td style="display: none;></td></tr>')
                 }
                 else
                 {
+                    $('tbody').html('');
+                    $('#view_auth_details_display tbody').html('');
                     $('#view_auth_details_display tbody').html(data);
                 }
             },  
@@ -169,7 +179,7 @@ $(document).ready(function()
                 
                 if(xhr.status == 419)
                 {
-                    // $("#myModal1").css("display", "block");
+                    $("#myModal_view").css("display", "block");
                 }
                 else
                 {
@@ -178,5 +188,13 @@ $(document).ready(function()
             }
         });
     }
+
+    $('#spanclose_view').click(function() {
+        $("#myModal_view").css("display", "none");
+    });
+
+    $(window).click(function(e) {
+        $("#myModal_view").css("display", "none");
+    });
 
 });

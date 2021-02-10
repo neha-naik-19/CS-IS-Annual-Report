@@ -34,13 +34,13 @@
     
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <!-- 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Include Bootstrap Datepicker -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="../css/projectstyle.css">
 
     <script src="{{ asset('js/basicjs.js') }}" defer></script>
@@ -48,6 +48,7 @@
     <script src="{{ asset('js/searcheditjs.js') }}" defer></script>
     <script src="{{ asset('js/editjs.js') }}" defer></script>
     <script src="{{ asset('js/viewjs.js') }}" defer></script>
+    <script src="{{ asset('js/bibtextjs.js') }}" defer></script>
 
     <title>Annual Report</title>
   </head>
@@ -70,7 +71,7 @@
                 </a>
             </div>
 
-            <div style="position: absolute; right: 2.1em; top: 3.9em;">
+            <div id="btnlogout" style="position: absolute; right: 2.1em; top: 3.9em;">
                   <a style="color: red;" href="{{ route('logout') }}"
                       onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
@@ -83,7 +84,7 @@
             </div>
 
             <div style="position: absolute; right: 2em; top: 7em;">
-              <a style="border: 1px solid #CCCCCC; padding: 7px; text-decoration: none; 
+              <a id="anrhome" style="border: 1px solid #CCCCCC; padding: 7px; text-decoration: none; 
                           border-radius: 14px; background: #4479BA; color: white; box-shadow: 0 1px 1px #888888;" 
                     href="{{url('/home')}}"><span class="glyphicon glyphicon-home"></span> HOME
               </a>
@@ -106,7 +107,7 @@
             <a href="#new" style="text-decoration:none"><button id="btnview" class="tablinks" onclick="openTab(event,'viewentry')" >View</button></a>
             <a href="#edit" style="text-decoration:none"><button id="btnsearch" class="tablinks" onclick="openTab(event,'searchedit')">Edit</button></a>
             <a href="#print" style="text-decoration:none"><button id="btnprint" class="tablinks" onclick="openTab(event,'printpdf')">Print</button></a>
-            <a href="#bibtex" style="text-decoration:none"><button id="btnbibtex" class="tablinks" onclick="openTab(event,'bibtex')">BIBTEX</button></a>
+            <a href="#bibtex" style="text-decoration:none"><button id="btnbibtex" class="tablinks" onclick="openTab(event,'bibtex')">BibTex</button></a>
           </div>
 
           <div class="maincontent">
@@ -115,7 +116,7 @@
             </div>
 
             <div class="tabcontent" id="viewentry">
-            @yield('viewcontent')
+              @yield('viewcontent')
             </div>
 
             <div class="tabcontent" id="printpdf">
@@ -123,7 +124,7 @@
             </div>
 
             <div class="tabcontent" id="bibtex">
-              <p>Bib Tex</p>
+              @yield('bibtexcontent')
             </div> 
 
             <div class="tabcontent" id="searchedit">

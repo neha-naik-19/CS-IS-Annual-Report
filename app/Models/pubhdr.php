@@ -12,6 +12,6 @@ class pubhdr extends Model
     protected $fillable = [
         'id','authortypeid','broadareaid','categoryid','nationality', 'confname','description',
             'impactfactor','place','pubdate','rankingid','title','articletypeid','volume','issue',
-            'pp','digitallibrary'
+            'pp','digitallibrary','publisher'
     ];
 }
